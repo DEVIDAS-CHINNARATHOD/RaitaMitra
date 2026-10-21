@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'data/models.dart';
@@ -21,6 +23,9 @@ class AppState extends ChangeNotifier {
       districtId = '',
       marketId = '',
       message = '';
+  String currentLocation = '';
+  double? currentLatitude, currentLongitude;
+  bool locating = false;
   List<Json> districts = [], alerts = [];
   List<Market> markets = [];
   List<Price> prices = [];
@@ -34,6 +39,98 @@ class AppState extends ChangeNotifier {
       markets.where((m) => m.id == marketId).firstOrNull;
   String districtName(String id) =>
       districts.where((d) => d['id'] == id).firstOrNull?['name'] ?? id;
+  void setCurrentLocation(String value) {
+    currentLocation = value;
+    notifyListeners();
+  }
+
+  Future<void> detectLocation({bool autoSelectNearest = false}) async {
+    if (locating) return;
+    locating = true;
+    notifyListeners();
+    try {
+      if (!await Geolocator.isLocationServiceEnabled()) {
+        currentLocation = 'Location services are off';
+        return;
+      }
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        currentLocation = 'Location permission needed';
+        return;
+      }
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.medium,
+          timeLimit: Duration(seconds: 15),
+        ),
+      );
+      currentLatitude = position.latitude;
+      currentLongitude = position.longitude;
+      currentLocation =
+          '${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)}';
+      try {
+        final places = await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+        if (places.isNotEmpty) {
+          final place = places.first;
+          final locality = place.subLocality?.trim().isNotEmpty == true
+              ? place.subLocality!.trim()
+              : place.locality?.trim().isNotEmpty == true
+              ? place.locality!.trim()
+              : place.subAdministrativeArea?.trim();
+          if (locality != null && locality.isNotEmpty) {
+            currentLocation =
+                '$locality${place.administrativeArea?.isNotEmpty == true ? ', ${place.administrativeArea}' : ''}';
+          }
+        }
+      } catch (_) {
+        // Coordinates still give a useful location when reverse geocoding is unavailable.
+      }
+      if (autoSelectNearest && marketId.isEmpty) {
+        final candidates = markets
+            .where(
+              (m) => m.verified && m.latitude != null && m.longitude != null,
+            )
+            .toList();
+        if (candidates.isNotEmpty) {
+          candidates.sort(
+            (a, b) =>
+                Geolocator.distanceBetween(
+                  position.latitude,
+                  position.longitude,
+                  a.latitude!,
+                  a.longitude!,
+                ).compareTo(
+                  Geolocator.distanceBetween(
+                    position.latitude,
+                    position.longitude,
+                    b.latitude!,
+                    b.longitude!,
+                  ),
+                ),
+          );
+          final nearest = candidates.first;
+          await saveProfile(
+            newName: name,
+            district: nearest.districtId,
+            market: nearest.id,
+          );
+        }
+      }
+    } catch (_) {
+      currentLocation = 'Could not determine location';
+    } finally {
+      locating = false;
+      notifyListeners();
+    }
+  }
+
   List<Price> get homePrices =>
       prices.where((p) => p.marketId == marketId).toList();
   Future<void> initialize() async {

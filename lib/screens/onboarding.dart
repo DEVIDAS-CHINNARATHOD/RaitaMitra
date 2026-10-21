@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import '../state.dart';
+import '../ui/karnataka_scene.dart';
 import '../ui/theme.dart';
 import '../ui/widgets.dart';
 
@@ -13,19 +14,8 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen>
-    with SingleTickerProviderStateMixin {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   bool signing = false;
-  late final AnimationController illustrationMotion = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 2100),
-  )..repeat(reverse: true);
-
-  @override
-  void dispose() {
-    illustrationMotion.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +27,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           children: [
             Row(
               children: [
-                const Icon(Icons.agriculture, color: accentBlue, size: 25),
-                const SizedBox(width: 9),
                 const Text(
                   'RAITHA MITRA',
                   style: TextStyle(
@@ -56,13 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ],
             ),
             const SizedBox(height: 32),
-            AnimatedBuilder(
-              animation: illustrationMotion,
-              builder: (context, _) => Transform.translate(
-                offset: Offset(0, -4 + illustrationMotion.value * 8),
-                child: const _FarmWelcomeIllustration(),
-              ),
-            ),
+            const KarnatakaFarmScene(height: 190),
             const SizedBox(height: 32),
             Text(
               s.t(
@@ -137,28 +119,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   }
 }
 
-class _FarmWelcomeIllustration extends StatelessWidget {
-  const _FarmWelcomeIllustration();
-
-  @override
-  Widget build(BuildContext context) => Container(
-    height: 174,
-    decoration: BoxDecoration(
-      color: paleBlue,
-      borderRadius: BorderRadius.circular(24),
-    ),
-    child: Center(
-      child: Container(
-        width: 112,
-        height: 112,
-        decoration: const BoxDecoration(color: skyBlue, shape: BoxShape.circle),
-        alignment: Alignment.center,
-        child: const Icon(Icons.agriculture, size: 62, color: accentBlue),
-      ),
-    ),
-  );
-}
-
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.state, this.editing = false});
   final AppState state;
@@ -180,6 +140,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     name = TextEditingController(text: s.name);
     district = s.districtId.isEmpty ? null : s.districtId;
     market = s.marketId.isEmpty ? null : s.marketId;
+    if (!widget.editing && s.marketId.isEmpty) {
+      Future.microtask(() => s.detectLocation(autoSelectNearest: true));
+    }
   }
 
   @override
@@ -208,16 +171,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> locate() async {
-    final candidates = widget.state.markets
-        .where((m) => m.verified && m.latitude != null && m.longitude != null)
-        .toList();
-    if (candidates.isEmpty) {
-      toast(
-        context,
-        'Verified market coordinates are not available yet. Please select your district and mandi.',
-      );
-      return;
-    }
     setState(() => locating = true);
     try {
       if (!await Geolocator.isLocationServiceEnabled()) {
@@ -237,6 +190,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           timeLimit: Duration(seconds: 15),
         ),
       );
+      final candidates = widget.state.markets
+          .where((m) => m.verified && m.latitude != null && m.longitude != null)
+          .toList();
+      if (candidates.isEmpty) {
+        widget.state.setCurrentLocation(
+          '${p.latitude.toStringAsFixed(4)}, ${p.longitude.toStringAsFixed(4)}',
+        );
+        if (mounted) {
+          toast(
+            context,
+            'Location found. Verified mandi coordinates are needed to choose the nearest market; please select one below.',
+          );
+        }
+        return;
+      }
       candidates.sort(
         (a, b) =>
             Geolocator.distanceBetween(

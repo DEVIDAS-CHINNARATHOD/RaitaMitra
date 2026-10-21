@@ -6,6 +6,7 @@ import 'screens/home.dart';
 import 'screens/markets.dart';
 import 'screens/crops.dart';
 import 'screens/support.dart';
+import 'ui/karnataka_scene.dart';
 
 class RaithaMitraApp extends StatefulWidget {
   const RaithaMitraApp({super.key, required this.state});
@@ -34,25 +35,33 @@ class _RaithaMitraAppState extends State<RaithaMitraApp> {
               child: Stack(
                 children: [
                   const Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.agriculture, size: 44, color: accentBlue),
-                        SizedBox(height: 16),
-                        Text(
-                          'Raitha Mitra',
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w600,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 28),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          KarnatakaFarmScene(height: 205),
+                          SizedBox(height: 22),
+                          Text(
+                            'Raitha Mitra',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 28),
-                        SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        ),
-                      ],
+                          SizedBox(height: 8),
+                          Text(
+                            'Growing with Karnataka',
+                            style: TextStyle(color: muted, fontSize: 14),
+                          ),
+                          SizedBox(height: 22),
+                          SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Positioned(
