@@ -1,0 +1,21 @@
+# Flutter
+.dart_tool/
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+android/local.properties
+android/.gradle/
+*.iml
+.idea/
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+config.local.json
+*.jks
+*.keystore
+__pycache__/
+.venv/
+artifacts/

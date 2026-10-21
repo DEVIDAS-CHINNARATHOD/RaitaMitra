@@ -1,0 +1,2021 @@
+{
+  "districts": [
+    {
+      "id": "bagalkote",
+      "name": "Bagalkote"
+    },
+    {
+      "id": "ballari",
+      "name": "Ballari"
+    },
+    {
+      "id": "belagavi",
+      "name": "Belagavi"
+    },
+    {
+      "id": "bengaluru-rural",
+      "name": "Bengaluru Rural"
+    },
+    {
+      "id": "bengaluru-south",
+      "name": "Bengaluru South"
+    },
+    {
+      "id": "bengaluru-urban",
+      "name": "Bengaluru Urban"
+    },
+    {
+      "id": "bidar",
+      "name": "Bidar"
+    },
+    {
+      "id": "chamarajanagar",
+      "name": "Chamarajanagar"
+    },
+    {
+      "id": "chikkaballapura",
+      "name": "Chikkaballapura"
+    },
+    {
+      "id": "chikkamagaluru",
+      "name": "Chikkamagaluru"
+    },
+    {
+      "id": "chitradurga",
+      "name": "Chitradurga"
+    },
+    {
+      "id": "dakshina-kannada",
+      "name": "Dakshina Kannada"
+    },
+    {
+      "id": "davanagere",
+      "name": "Davanagere"
+    },
+    {
+      "id": "dharwad",
+      "name": "Dharwad"
+    },
+    {
+      "id": "gadag",
+      "name": "Gadag"
+    },
+    {
+      "id": "hassan",
+      "name": "Hassan"
+    },
+    {
+      "id": "haveri",
+      "name": "Haveri"
+    },
+    {
+      "id": "kalaburagi",
+      "name": "Kalaburagi"
+    },
+    {
+      "id": "kodagu",
+      "name": "Kodagu"
+    },
+    {
+      "id": "kolar",
+      "name": "Kolar"
+    },
+    {
+      "id": "koppal",
+      "name": "Koppal"
+    },
+    {
+      "id": "mandya",
+      "name": "Mandya"
+    },
+    {
+      "id": "mysuru",
+      "name": "Mysuru"
+    },
+    {
+      "id": "raichur",
+      "name": "Raichur"
+    },
+    {
+      "id": "shivamogga",
+      "name": "Shivamogga"
+    },
+    {
+      "id": "tumakuru",
+      "name": "Tumakuru"
+    },
+    {
+      "id": "udupi",
+      "name": "Udupi"
+    },
+    {
+      "id": "uttara-kannada",
+      "name": "Uttara Kannada"
+    },
+    {
+      "id": "vijayanagara",
+      "name": "Vijayanagara"
+    },
+    {
+      "id": "vijayapura",
+      "name": "Vijayapura"
+    },
+    {
+      "id": "yadgir",
+      "name": "Yadgir"
+    }
+  ],
+  "markets": [
+    {
+      "id": "bagalkote--bagalkot",
+      "district_id": "bagalkote",
+      "name": "Bagalkot",
+      "api_name": "Bagalakot",
+      "api_district": "Bagalkot",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bagalkote--badami",
+      "district_id": "bagalkote",
+      "name": "Badami",
+      "api_name": "Badami",
+      "api_district": "Bagalkot",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bagalkote--hungund",
+      "district_id": "bagalkote",
+      "name": "Hungund",
+      "api_name": "Hungund",
+      "api_district": "Bagalkot",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bagalkote--jamkhandi",
+      "district_id": "bagalkote",
+      "name": "Jamkhandi",
+      "api_name": "Jamkhandi",
+      "api_district": "Bagalkot",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bagalkote--mahalingapur",
+      "district_id": "bagalkote",
+      "name": "Mahalingapur",
+      "api_name": "Mahalingapur",
+      "api_district": "Bagalkot",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bagalkote--bilagi",
+      "district_id": "bagalkote",
+      "name": "Bilagi",
+      "api_name": "Bilagi",
+      "api_district": "Bagalkot",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "ballari--ballari",
+      "district_id": "ballari",
+      "name": "Ballari",
+      "api_name": "Ballari",
+      "api_district": "Bellary",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "ballari--kampli",
+      "district_id": "ballari",
+      "name": "Kampli",
+      "api_name": "Kampli",
+      "api_district": "Bellary",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "ballari--siruguppa",
+      "district_id": "ballari",
+      "name": "Siruguppa",
+      "api_name": "Siruguppa",
+      "api_district": "Bellary",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "ballari--sandur",
+      "district_id": "ballari",
+      "name": "Sandur",
+      "api_name": "Sandur",
+      "api_district": "Bellary",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--belagavi",
+      "district_id": "belagavi",
+      "name": "Belagavi",
+      "api_name": "Belagavi",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--athani",
+      "district_id": "belagavi",
+      "name": "Athani",
+      "api_name": "Athani",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--bailhongal",
+      "district_id": "belagavi",
+      "name": "Bailhongal",
+      "api_name": "Bailhongal",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--chikodi",
+      "district_id": "belagavi",
+      "name": "Chikodi",
+      "api_name": "Chikodi",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--gokak",
+      "district_id": "belagavi",
+      "name": "Gokak",
+      "api_name": "Gokak",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--hukkeri",
+      "district_id": "belagavi",
+      "name": "Hukkeri",
+      "api_name": "Hukkeri",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--khanapur",
+      "district_id": "belagavi",
+      "name": "Khanapur",
+      "api_name": "Khanapur",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--nippani",
+      "district_id": "belagavi",
+      "name": "Nippani",
+      "api_name": "Nippani",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--ramdurg",
+      "district_id": "belagavi",
+      "name": "Ramdurg",
+      "api_name": "Ramdurg",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--raibag",
+      "district_id": "belagavi",
+      "name": "Raibag",
+      "api_name": "Raibag",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--saundatti",
+      "district_id": "belagavi",
+      "name": "Saundatti",
+      "api_name": "Saundatti",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--sankeshwar",
+      "district_id": "belagavi",
+      "name": "Sankeshwar",
+      "api_name": "Sankeshwar",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--kudchi",
+      "district_id": "belagavi",
+      "name": "Kudchi",
+      "api_name": "Kudchi",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "belagavi--yaragatti",
+      "district_id": "belagavi",
+      "name": "Yaragatti",
+      "api_name": "Yaragatti",
+      "api_district": "Belgaum",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-rural--doddaballapur",
+      "district_id": "bengaluru-rural",
+      "name": "Doddaballapur",
+      "api_name": "Doddaballapur",
+      "api_district": "Bengaluru Rural",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-rural--hoskote",
+      "district_id": "bengaluru-rural",
+      "name": "Hoskote",
+      "api_name": "Hoskote",
+      "api_district": "Bengaluru Rural",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-rural--devanahalli",
+      "district_id": "bengaluru-rural",
+      "name": "Devanahalli",
+      "api_name": "Devanahalli",
+      "api_district": "Bengaluru Rural",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-rural--nelamangala",
+      "district_id": "bengaluru-rural",
+      "name": "Nelamangala",
+      "api_name": "Nelamangala",
+      "api_district": "Bengaluru Rural",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-south--ramanagara",
+      "district_id": "bengaluru-south",
+      "name": "Ramanagara",
+      "api_name": "Ramanagara",
+      "api_district": "Bengaluru South",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-south--channapatna",
+      "district_id": "bengaluru-south",
+      "name": "Channapatna",
+      "api_name": "Channapatna",
+      "api_district": "Bengaluru South",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-south--kanakapura",
+      "district_id": "bengaluru-south",
+      "name": "Kanakapura",
+      "api_name": "Kanakapura",
+      "api_district": "Bengaluru South",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-south--magadi",
+      "district_id": "bengaluru-south",
+      "name": "Magadi",
+      "api_name": "Magadi",
+      "api_district": "Bengaluru South",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-urban--bengaluru-apmc",
+      "district_id": "bengaluru-urban",
+      "name": "Bengaluru APMC",
+      "api_name": "Bengaluru APMC",
+      "api_district": "Bangalore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-urban--bengaluru-fruits-and-vegetables",
+      "district_id": "bengaluru-urban",
+      "name": "Bengaluru Fruits and Vegetables",
+      "api_name": "Bengaluru Fruits and Vegetables",
+      "api_district": "Bangalore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-urban--binny-mill-f-v",
+      "district_id": "bengaluru-urban",
+      "name": "Binny Mill F&V",
+      "api_name": "Binny Mill F&V",
+      "api_district": "Bangalore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-urban--binny-mill-ff-v",
+      "district_id": "bengaluru-urban",
+      "name": "Binny Mill FF&V",
+      "api_name": "Binny Mill FF&V",
+      "api_district": "Bangalore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-urban--chandapura",
+      "district_id": "bengaluru-urban",
+      "name": "Chandapura",
+      "api_name": "Chandapura",
+      "api_district": "Bangalore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-urban--jigani",
+      "district_id": "bengaluru-urban",
+      "name": "Jigani",
+      "api_name": "Jigani",
+      "api_district": "Bangalore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bengaluru-urban--byatarayanapura",
+      "district_id": "bengaluru-urban",
+      "name": "Byatarayanapura",
+      "api_name": "Byatarayanapura",
+      "api_district": "Bangalore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bidar--bidar",
+      "district_id": "bidar",
+      "name": "Bidar",
+      "api_name": "Bidar",
+      "api_district": "Bidar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bidar--aurad",
+      "district_id": "bidar",
+      "name": "Aurad",
+      "api_name": "Aurad",
+      "api_district": "Bidar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bidar--basavakalyan",
+      "district_id": "bidar",
+      "name": "Basavakalyan",
+      "api_name": "Basavakalyan",
+      "api_district": "Bidar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bidar--bhalki",
+      "district_id": "bidar",
+      "name": "Bhalki",
+      "api_name": "Bhalki",
+      "api_district": "Bidar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "bidar--humnabad",
+      "district_id": "bidar",
+      "name": "Humnabad",
+      "api_name": "Humnabad",
+      "api_district": "Bidar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chamarajanagar--chamarajanagar",
+      "district_id": "chamarajanagar",
+      "name": "Chamarajanagar",
+      "api_name": "Chamarajanagar",
+      "api_district": "Chamarajanagar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chamarajanagar--gundlupet",
+      "district_id": "chamarajanagar",
+      "name": "Gundlupet",
+      "api_name": "Gundlupet",
+      "api_district": "Chamarajanagar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chamarajanagar--kollegal",
+      "district_id": "chamarajanagar",
+      "name": "Kollegal",
+      "api_name": "Kollegal",
+      "api_district": "Chamarajanagar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chamarajanagar--yelandur",
+      "district_id": "chamarajanagar",
+      "name": "Yelandur",
+      "api_name": "Yelandur",
+      "api_district": "Chamarajanagar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkaballapura--chikkaballapura",
+      "district_id": "chikkaballapura",
+      "name": "Chikkaballapura",
+      "api_name": "Chikkaballapura",
+      "api_district": "Chikkaballapura",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkaballapura--bagepalli",
+      "district_id": "chikkaballapura",
+      "name": "Bagepalli",
+      "api_name": "Bagepalli",
+      "api_district": "Chikkaballapura",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkaballapura--chintamani",
+      "district_id": "chikkaballapura",
+      "name": "Chintamani",
+      "api_name": "Chintamani",
+      "api_district": "Chikkaballapura",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkaballapura--gauribidanur",
+      "district_id": "chikkaballapura",
+      "name": "Gauribidanur",
+      "api_name": "Gauribidanur",
+      "api_district": "Chikkaballapura",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkaballapura--sidlaghatta",
+      "district_id": "chikkaballapura",
+      "name": "Sidlaghatta",
+      "api_name": "Sidlaghatta",
+      "api_district": "Chikkaballapura",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkamagaluru--chikkamagaluru",
+      "district_id": "chikkamagaluru",
+      "name": "Chikkamagaluru",
+      "api_name": "Chikkamagaluru",
+      "api_district": "Chikmagalur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkamagaluru--kadur",
+      "district_id": "chikkamagaluru",
+      "name": "Kadur",
+      "api_name": "Kadur",
+      "api_district": "Chikmagalur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkamagaluru--tarikere",
+      "district_id": "chikkamagaluru",
+      "name": "Tarikere",
+      "api_name": "Tarikere",
+      "api_district": "Chikmagalur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkamagaluru--mudigere",
+      "district_id": "chikkamagaluru",
+      "name": "Mudigere",
+      "api_name": "Mudigere",
+      "api_district": "Chikmagalur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkamagaluru--koppa",
+      "district_id": "chikkamagaluru",
+      "name": "Koppa",
+      "api_name": "Koppa",
+      "api_district": "Chikmagalur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chikkamagaluru--sringeri",
+      "district_id": "chikkamagaluru",
+      "name": "Sringeri",
+      "api_name": "Sringeri",
+      "api_district": "Chikmagalur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chitradurga--chitradurga",
+      "district_id": "chitradurga",
+      "name": "Chitradurga",
+      "api_name": "Chitradurga",
+      "api_district": "Chitradurga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chitradurga--challakere",
+      "district_id": "chitradurga",
+      "name": "Challakere",
+      "api_name": "Challakere",
+      "api_district": "Chitradurga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chitradurga--hiriyur",
+      "district_id": "chitradurga",
+      "name": "Hiriyur",
+      "api_name": "Hiriyur",
+      "api_district": "Chitradurga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chitradurga--holalkere",
+      "district_id": "chitradurga",
+      "name": "Holalkere",
+      "api_name": "Holalkere",
+      "api_district": "Chitradurga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chitradurga--hosadurga",
+      "district_id": "chitradurga",
+      "name": "Hosadurga",
+      "api_name": "Hosadurga",
+      "api_district": "Chitradurga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "chitradurga--molakalmuru",
+      "district_id": "chitradurga",
+      "name": "Molakalmuru",
+      "api_name": "Molakalmuru",
+      "api_district": "Chitradurga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dakshina-kannada--mangaluru",
+      "district_id": "dakshina-kannada",
+      "name": "Mangaluru",
+      "api_name": "Mangaluru",
+      "api_district": "Dakshina Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dakshina-kannada--puttur",
+      "district_id": "dakshina-kannada",
+      "name": "Puttur",
+      "api_name": "Puttur",
+      "api_district": "Dakshina Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dakshina-kannada--sullia",
+      "district_id": "dakshina-kannada",
+      "name": "Sullia",
+      "api_name": "Sullia",
+      "api_district": "Dakshina Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dakshina-kannada--belthangady",
+      "district_id": "dakshina-kannada",
+      "name": "Belthangady",
+      "api_name": "Belthangady",
+      "api_district": "Dakshina Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dakshina-kannada--bantwal",
+      "district_id": "dakshina-kannada",
+      "name": "Bantwal",
+      "api_name": "Bantwal",
+      "api_district": "Dakshina Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "davanagere--davanagere",
+      "district_id": "davanagere",
+      "name": "Davanagere",
+      "api_name": "Davanagere",
+      "api_district": "Davangere",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "davanagere--harihara",
+      "district_id": "davanagere",
+      "name": "Harihara",
+      "api_name": "Harihara",
+      "api_district": "Davangere",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "davanagere--channagiri",
+      "district_id": "davanagere",
+      "name": "Channagiri",
+      "api_name": "Channagiri",
+      "api_district": "Davangere",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "davanagere--honnali",
+      "district_id": "davanagere",
+      "name": "Honnali",
+      "api_name": "Honnali",
+      "api_district": "Davangere",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "davanagere--jagalur",
+      "district_id": "davanagere",
+      "name": "Jagalur",
+      "api_name": "Jagalur",
+      "api_district": "Davangere",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dharwad--dharwad",
+      "district_id": "dharwad",
+      "name": "Dharwad",
+      "api_name": "Dharwad",
+      "api_district": "Dharwad",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dharwad--hubballi",
+      "district_id": "dharwad",
+      "name": "Hubballi",
+      "api_name": "Hubballi",
+      "api_district": "Dharwad",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dharwad--annigeri",
+      "district_id": "dharwad",
+      "name": "Annigeri",
+      "api_name": "Annigeri",
+      "api_district": "Dharwad",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dharwad--kalghatagi",
+      "district_id": "dharwad",
+      "name": "Kalghatagi",
+      "api_name": "Kalghatagi",
+      "api_district": "Dharwad",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dharwad--kundgol",
+      "district_id": "dharwad",
+      "name": "Kundgol",
+      "api_name": "Kundgol",
+      "api_district": "Dharwad",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "dharwad--navalgund",
+      "district_id": "dharwad",
+      "name": "Navalgund",
+      "api_name": "Navalgund",
+      "api_district": "Dharwad",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "gadag--gadag",
+      "district_id": "gadag",
+      "name": "Gadag",
+      "api_name": "Gadag",
+      "api_district": "Gadag",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "gadag--lakshmeshwar",
+      "district_id": "gadag",
+      "name": "Lakshmeshwar",
+      "api_name": "Lakshmeshwar",
+      "api_district": "Gadag",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "gadag--ron",
+      "district_id": "gadag",
+      "name": "Ron",
+      "api_name": "Ron",
+      "api_district": "Gadag",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "gadag--nargund",
+      "district_id": "gadag",
+      "name": "Nargund",
+      "api_name": "Nargund",
+      "api_district": "Gadag",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "gadag--mundargi",
+      "district_id": "gadag",
+      "name": "Mundargi",
+      "api_name": "Mundargi",
+      "api_district": "Gadag",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "gadag--gajendragad",
+      "district_id": "gadag",
+      "name": "Gajendragad",
+      "api_name": "Gajendragad",
+      "api_district": "Gadag",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--hassan",
+      "district_id": "hassan",
+      "name": "Hassan",
+      "api_name": "Hassan",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--arasikere",
+      "district_id": "hassan",
+      "name": "Arasikere",
+      "api_name": "Arasikere",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--belur",
+      "district_id": "hassan",
+      "name": "Belur",
+      "api_name": "Belur",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--channarayapatna",
+      "district_id": "hassan",
+      "name": "Channarayapatna",
+      "api_name": "Channarayapatna",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--holenarasipura",
+      "district_id": "hassan",
+      "name": "Holenarasipura",
+      "api_name": "Holenarasipura",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--sakleshpur",
+      "district_id": "hassan",
+      "name": "Sakleshpur",
+      "api_name": "Sakleshpur",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--arkalgud",
+      "district_id": "hassan",
+      "name": "Arkalgud",
+      "api_name": "Arkalgud",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "hassan--alur",
+      "district_id": "hassan",
+      "name": "Alur",
+      "api_name": "Alur",
+      "api_district": "Hassan",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "haveri--haveri",
+      "district_id": "haveri",
+      "name": "Haveri",
+      "api_name": "Haveri",
+      "api_district": "Haveri",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "haveri--byadagi",
+      "district_id": "haveri",
+      "name": "Byadagi",
+      "api_name": "Byadagi",
+      "api_district": "Haveri",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "haveri--hangal",
+      "district_id": "haveri",
+      "name": "Hangal",
+      "api_name": "Hangal",
+      "api_district": "Haveri",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "haveri--hirekerur",
+      "district_id": "haveri",
+      "name": "Hirekerur",
+      "api_name": "Hirekerur",
+      "api_district": "Haveri",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "haveri--ranebennur",
+      "district_id": "haveri",
+      "name": "Ranebennur",
+      "api_name": "Ranebennur",
+      "api_district": "Haveri",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "haveri--savanur",
+      "district_id": "haveri",
+      "name": "Savanur",
+      "api_name": "Savanur",
+      "api_district": "Haveri",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "haveri--shiggaon",
+      "district_id": "haveri",
+      "name": "Shiggaon",
+      "api_name": "Shiggaon",
+      "api_district": "Haveri",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kalaburagi--aland",
+      "district_id": "kalaburagi",
+      "name": "Aland",
+      "api_name": "Aland",
+      "api_district": "Gulbarga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kalaburagi--chincholi",
+      "district_id": "kalaburagi",
+      "name": "Chincholi",
+      "api_name": "Chincholi",
+      "api_district": "Gulbarga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kalaburagi--chittapur",
+      "district_id": "kalaburagi",
+      "name": "Chittapur",
+      "api_name": "Chittapur",
+      "api_district": "Gulbarga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kalaburagi--kalaburagi",
+      "district_id": "kalaburagi",
+      "name": "Kalaburagi",
+      "api_name": "Kalaburagi",
+      "api_district": "Gulbarga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kalaburagi--kalaburagi-jevargi",
+      "district_id": "kalaburagi",
+      "name": "Kalaburagi (Jevargi)",
+      "api_name": "Kalaburagi (Jevargi)",
+      "api_district": "Gulbarga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kalaburagi--kalaburagi-afzalpur",
+      "district_id": "kalaburagi",
+      "name": "Kalaburagi (Afzalpur)",
+      "api_name": "Kalaburagi (Afzalpur)",
+      "api_district": "Gulbarga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kalaburagi--sedam",
+      "district_id": "kalaburagi",
+      "name": "Sedam",
+      "api_name": "Sedam",
+      "api_district": "Gulbarga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kodagu--madikeri",
+      "district_id": "kodagu",
+      "name": "Madikeri",
+      "api_name": "Madikeri",
+      "api_district": "Kodagu",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kodagu--gonikoppal",
+      "district_id": "kodagu",
+      "name": "Gonikoppal",
+      "api_name": "Gonikoppal",
+      "api_district": "Kodagu",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kodagu--kushalnagar",
+      "district_id": "kodagu",
+      "name": "Kushalnagar",
+      "api_name": "Kushalnagar",
+      "api_district": "Kodagu",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kodagu--somwarpet",
+      "district_id": "kodagu",
+      "name": "Somwarpet",
+      "api_name": "Somwarpet",
+      "api_district": "Kodagu",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kolar--kolar",
+      "district_id": "kolar",
+      "name": "Kolar",
+      "api_name": "Kolar",
+      "api_district": "Kolar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kolar--bangarpet",
+      "district_id": "kolar",
+      "name": "Bangarpet",
+      "api_name": "Bangarpet",
+      "api_district": "Kolar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kolar--malur",
+      "district_id": "kolar",
+      "name": "Malur",
+      "api_name": "Malur",
+      "api_district": "Kolar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kolar--mulbagal",
+      "district_id": "kolar",
+      "name": "Mulbagal",
+      "api_name": "Mulbagal",
+      "api_district": "Kolar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kolar--srinivaspur",
+      "district_id": "kolar",
+      "name": "Srinivaspur",
+      "api_name": "Srinivaspur",
+      "api_district": "Kolar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "kolar--bethamangala",
+      "district_id": "kolar",
+      "name": "Bethamangala",
+      "api_name": "Bethamangala",
+      "api_district": "Kolar",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "koppal--koppal",
+      "district_id": "koppal",
+      "name": "Koppal",
+      "api_name": "Koppal",
+      "api_district": "Koppal",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "koppal--gangavathi",
+      "district_id": "koppal",
+      "name": "Gangavathi",
+      "api_name": "Gangavathi",
+      "api_district": "Koppal",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "koppal--kanakagiri",
+      "district_id": "koppal",
+      "name": "Kanakagiri",
+      "api_name": "Kanakagiri",
+      "api_district": "Koppal",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "koppal--kushtagi",
+      "district_id": "koppal",
+      "name": "Kushtagi",
+      "api_name": "Kushtagi",
+      "api_district": "Koppal",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "koppal--yelburga",
+      "district_id": "koppal",
+      "name": "Yelburga",
+      "api_name": "Yelburga",
+      "api_district": "Koppal",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "koppal--karatagi",
+      "district_id": "koppal",
+      "name": "Karatagi",
+      "api_name": "Karatagi",
+      "api_district": "Koppal",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mandya--mandya",
+      "district_id": "mandya",
+      "name": "Mandya",
+      "api_name": "Mandya",
+      "api_district": "Mandya",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mandya--maddur",
+      "district_id": "mandya",
+      "name": "Maddur",
+      "api_name": "Maddur",
+      "api_district": "Mandya",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mandya--nagamangala",
+      "district_id": "mandya",
+      "name": "Nagamangala",
+      "api_name": "Nagamangala",
+      "api_district": "Mandya",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mandya--k-r-pet",
+      "district_id": "mandya",
+      "name": "K.R. Pet",
+      "api_name": "K.R. Pet",
+      "api_district": "Mandya",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mandya--pandavapura",
+      "district_id": "mandya",
+      "name": "Pandavapura",
+      "api_name": "Pandavapura",
+      "api_district": "Mandya",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mandya--srirangapatna",
+      "district_id": "mandya",
+      "name": "Srirangapatna",
+      "api_name": "Srirangapatna",
+      "api_district": "Mandya",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mandya--malavalli",
+      "district_id": "mandya",
+      "name": "Malavalli",
+      "api_name": "Malavalli",
+      "api_district": "Mandya",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mysuru--mysuru",
+      "district_id": "mysuru",
+      "name": "Mysuru",
+      "api_name": "Mysuru",
+      "api_district": "Mysore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mysuru--hunsur",
+      "district_id": "mysuru",
+      "name": "Hunsur",
+      "api_name": "Hunsur",
+      "api_district": "Mysore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mysuru--k-r-nagar",
+      "district_id": "mysuru",
+      "name": "K.R. Nagar",
+      "api_name": "K.R. Nagar",
+      "api_district": "Mysore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mysuru--nanjangud",
+      "district_id": "mysuru",
+      "name": "Nanjangud",
+      "api_name": "Nanjangud",
+      "api_district": "Mysore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mysuru--periyapatna",
+      "district_id": "mysuru",
+      "name": "Periyapatna",
+      "api_name": "Periyapatna",
+      "api_district": "Mysore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mysuru--t-narasipura",
+      "district_id": "mysuru",
+      "name": "T. Narasipura",
+      "api_name": "T. Narasipura",
+      "api_district": "Mysore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "mysuru--h-d-kote",
+      "district_id": "mysuru",
+      "name": "H.D. Kote",
+      "api_name": "H.D. Kote",
+      "api_district": "Mysore",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "raichur--raichur",
+      "district_id": "raichur",
+      "name": "Raichur",
+      "api_name": "Raichur",
+      "api_district": "Raichur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "raichur--sindhanur",
+      "district_id": "raichur",
+      "name": "Sindhanur",
+      "api_name": "Sindhanur",
+      "api_district": "Raichur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "raichur--manvi",
+      "district_id": "raichur",
+      "name": "Manvi",
+      "api_name": "Manvi",
+      "api_district": "Raichur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "raichur--lingasugur",
+      "district_id": "raichur",
+      "name": "Lingasugur",
+      "api_name": "Lingasugur",
+      "api_district": "Raichur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "raichur--devadurga",
+      "district_id": "raichur",
+      "name": "Devadurga",
+      "api_name": "Devadurga",
+      "api_district": "Raichur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "shivamogga--shivamogga",
+      "district_id": "shivamogga",
+      "name": "Shivamogga",
+      "api_name": "Shivamogga",
+      "api_district": "Shimoga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "shivamogga--bhadravati",
+      "district_id": "shivamogga",
+      "name": "Bhadravati",
+      "api_name": "Bhadravati",
+      "api_district": "Shimoga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "shivamogga--sagar",
+      "district_id": "shivamogga",
+      "name": "Sagar",
+      "api_name": "Sagar",
+      "api_district": "Shimoga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "shivamogga--hosanagara",
+      "district_id": "shivamogga",
+      "name": "Hosanagara",
+      "api_name": "Hosanagara",
+      "api_district": "Shimoga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "shivamogga--soraba",
+      "district_id": "shivamogga",
+      "name": "Soraba",
+      "api_name": "Soraba",
+      "api_district": "Shimoga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "shivamogga--shikaripura",
+      "district_id": "shivamogga",
+      "name": "Shikaripura",
+      "api_name": "Shikaripura",
+      "api_district": "Shimoga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "shivamogga--thirthahalli",
+      "district_id": "shivamogga",
+      "name": "Thirthahalli",
+      "api_name": "Thirthahalli",
+      "api_district": "Shimoga",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--tumakuru",
+      "district_id": "tumakuru",
+      "name": "Tumakuru",
+      "api_name": "Tumakuru",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--gubbi",
+      "district_id": "tumakuru",
+      "name": "Gubbi",
+      "api_name": "Gubbi",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--kunigal",
+      "district_id": "tumakuru",
+      "name": "Kunigal",
+      "api_name": "Kunigal",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--madhugiri",
+      "district_id": "tumakuru",
+      "name": "Madhugiri",
+      "api_name": "Madhugiri",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--tiptur",
+      "district_id": "tumakuru",
+      "name": "Tiptur",
+      "api_name": "Tiptur",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--turuvekere",
+      "district_id": "tumakuru",
+      "name": "Turuvekere",
+      "api_name": "Turuvekere",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--chikkanayakanahalli",
+      "district_id": "tumakuru",
+      "name": "Chikkanayakanahalli",
+      "api_name": "Chikkanayakanahalli",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--huliyar",
+      "district_id": "tumakuru",
+      "name": "Huliyar",
+      "api_name": "Huliyar",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--chelur",
+      "district_id": "tumakuru",
+      "name": "Chelur",
+      "api_name": "Chelur",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--sira",
+      "district_id": "tumakuru",
+      "name": "Sira",
+      "api_name": "Sira",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--pavagada",
+      "district_id": "tumakuru",
+      "name": "Pavagada",
+      "api_name": "Pavagada",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "tumakuru--koratagere",
+      "district_id": "tumakuru",
+      "name": "Koratagere",
+      "api_name": "Koratagere",
+      "api_district": "Tumkur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "udupi--udupi",
+      "district_id": "udupi",
+      "name": "Udupi",
+      "api_name": "Udupi",
+      "api_district": "Udupi",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "udupi--kundapura",
+      "district_id": "udupi",
+      "name": "Kundapura",
+      "api_name": "Kundapura",
+      "api_district": "Udupi",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "udupi--karkala",
+      "district_id": "udupi",
+      "name": "Karkala",
+      "api_name": "Karkala",
+      "api_district": "Udupi",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--karwar",
+      "district_id": "uttara-kannada",
+      "name": "Karwar",
+      "api_name": "Karwar",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--honnavar",
+      "district_id": "uttara-kannada",
+      "name": "Honnavar",
+      "api_name": "Honnavar",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--kumta",
+      "district_id": "uttara-kannada",
+      "name": "Kumta",
+      "api_name": "Kumta",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--siddapur",
+      "district_id": "uttara-kannada",
+      "name": "Siddapur",
+      "api_name": "Siddapur",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--sirsi",
+      "district_id": "uttara-kannada",
+      "name": "Sirsi",
+      "api_name": "Sirsi",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--yellapur",
+      "district_id": "uttara-kannada",
+      "name": "Yellapur",
+      "api_name": "Yellapur",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--haliyal",
+      "district_id": "uttara-kannada",
+      "name": "Haliyal",
+      "api_name": "Haliyal",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "uttara-kannada--mundgod",
+      "district_id": "uttara-kannada",
+      "name": "Mundgod",
+      "api_name": "Mundgod",
+      "api_district": "Uttara Kannada",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayanagara--hosapete",
+      "district_id": "vijayanagara",
+      "name": "Hosapete",
+      "api_name": "Hosapete",
+      "api_district": "Vijayanagara",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayanagara--h-b-halli",
+      "district_id": "vijayanagara",
+      "name": "H.B. Halli",
+      "api_name": "H.B. Halli",
+      "api_district": "Vijayanagara",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayanagara--hoovina-hadagali",
+      "district_id": "vijayanagara",
+      "name": "Hoovina Hadagali",
+      "api_name": "Hoovina Hadagali",
+      "api_district": "Vijayanagara",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayanagara--kottur",
+      "district_id": "vijayanagara",
+      "name": "Kottur",
+      "api_name": "Kottur",
+      "api_district": "Vijayanagara",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayanagara--kudligi",
+      "district_id": "vijayanagara",
+      "name": "Kudligi",
+      "api_name": "Kudligi",
+      "api_district": "Vijayanagara",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayanagara--harapanahalli",
+      "district_id": "vijayanagara",
+      "name": "Harapanahalli",
+      "api_name": "Harapanahalli",
+      "api_district": "Vijayanagara",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayapura--vijayapura",
+      "district_id": "vijayapura",
+      "name": "Vijayapura",
+      "api_name": "Vijayapura",
+      "api_district": "Bijapur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayapura--indi",
+      "district_id": "vijayapura",
+      "name": "Indi",
+      "api_name": "Indi",
+      "api_district": "Bijapur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayapura--sindagi",
+      "district_id": "vijayapura",
+      "name": "Sindagi",
+      "api_name": "Sindagi",
+      "api_district": "Bijapur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayapura--talikote",
+      "district_id": "vijayapura",
+      "name": "Talikote",
+      "api_name": "Talikote",
+      "api_district": "Bijapur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayapura--basavana-bagewadi",
+      "district_id": "vijayapura",
+      "name": "Basavana Bagewadi",
+      "api_name": "Basavana Bagewadi",
+      "api_district": "Bijapur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "vijayapura--muddebihal",
+      "district_id": "vijayapura",
+      "name": "Muddebihal",
+      "api_name": "Muddebihal",
+      "api_district": "Bijapur",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "yadgir--yadgir",
+      "district_id": "yadgir",
+      "name": "Yadgir",
+      "api_name": "Yadgir",
+      "api_district": "Yadgir",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "yadgir--shahapur",
+      "district_id": "yadgir",
+      "name": "Shahapur",
+      "api_name": "Shahapur",
+      "api_district": "Yadgir",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    },
+    {
+      "id": "yadgir--shorapur",
+      "district_id": "yadgir",
+      "name": "Shorapur",
+      "api_name": "Shorapur",
+      "api_district": "Yadgir",
+      "latitude": null,
+      "longitude": null,
+      "verified": false
+    }
+  ],
+  "source": "User supplied survey workbook; directory entries require verification"
+}
