@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'state.dart';
 import 'ui/theme.dart';
 import 'screens/onboarding.dart';
+import 'screens/email_auth.dart';
 import 'screens/home.dart';
 import 'screens/markets.dart';
 import 'screens/crops.dart';
@@ -110,6 +111,9 @@ class _RaithaMitraAppState extends State<RaithaMitraApp> {
               ),
             ),
           );
+        }
+        if (state.passwordRecovery) {
+          return PasswordRecoveryScreen(state: state);
         }
         if (!state.entered) return WelcomeScreen(state: state);
         if (!state.onboarded) return ProfileScreen(state: state);

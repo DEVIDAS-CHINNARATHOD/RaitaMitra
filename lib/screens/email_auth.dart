@@ -65,6 +65,27 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     }
   }
 
+  Future<void> sendResetLink() async {
+    final address = email.text.trim();
+    if (!RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(address)) {
+      toast(context, 'Enter a valid email address first.');
+      return;
+    }
+    setState(() => busy = true);
+    try {
+      await widget.state.sendPasswordReset(address);
+      if (mounted) {
+        toast(context, 'Password reset link sent. Check your email.');
+      }
+    } on AuthException catch (error) {
+      if (mounted) toast(context, error.message);
+    } catch (error) {
+      if (mounted) toast(context, 'Could not send reset link: $error');
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
@@ -152,6 +173,14 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 return null;
               },
             ),
+            if (!registering)
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: busy ? null : sendResetLink,
+                  child: const Text('Forgot password?'),
+                ),
+              ),
             if (registering) ...[
               const SizedBox(height: 16),
               TextFormField(
@@ -196,6 +225,121 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 registering
                     ? 'Already have an account? Sign in'
                     : 'New here? Create an account',
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class PasswordRecoveryScreen extends StatefulWidget {
+  const PasswordRecoveryScreen({super.key, required this.state});
+
+  final AppState state;
+
+  @override
+  State<PasswordRecoveryScreen> createState() => _PasswordRecoveryScreenState();
+}
+
+class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
+  final formKey = GlobalKey<FormState>();
+  final password = TextEditingController();
+  final confirmation = TextEditingController();
+  bool busy = false;
+  bool showPassword = false;
+
+  @override
+  void dispose() {
+    password.dispose();
+    confirmation.dispose();
+    super.dispose();
+  }
+
+  Future<void> updatePassword() async {
+    if (busy || !formKey.currentState!.validate()) return;
+    setState(() => busy = true);
+    try {
+      await widget.state.updatePassword(password.text);
+      if (mounted) toast(context, 'Password updated. You are signed in.');
+    } on AuthException catch (error) {
+      if (mounted) toast(context, error.message);
+    } catch (error) {
+      if (mounted) toast(context, 'Could not update password: $error');
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Set a new password')),
+    body: SafeArea(
+      child: Form(
+        key: formKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+          children: [
+            Text(
+              'Choose a new password',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: ink,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Enter and confirm your new password to finish resetting it.',
+              style: TextStyle(color: muted),
+            ),
+            const SizedBox(height: 28),
+            TextFormField(
+              controller: password,
+              obscureText: !showPassword,
+              autofillHints: const [AutofillHints.newPassword],
+              decoration: InputDecoration(
+                labelText: 'New password',
+                prefixIcon: const Icon(Icons.lock_outline),
+                suffixIcon: IconButton(
+                  onPressed: () => setState(() => showPassword = !showPassword),
+                  icon: Icon(
+                    showPassword ? Icons.visibility_off : Icons.visibility,
+                  ),
+                ),
+              ),
+              validator: (value) => (value ?? '').length < 6
+                  ? 'Use at least 6 characters.'
+                  : null,
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: confirmation,
+              obscureText: !showPassword,
+              textInputAction: TextInputAction.done,
+              decoration: const InputDecoration(
+                labelText: 'Confirm new password',
+                prefixIcon: Icon(Icons.lock_outline),
+              ),
+              validator: (value) =>
+                  value != password.text ? 'Passwords do not match.' : null,
+              onFieldSubmitted: (_) => updatePassword(),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              height: 54,
+              child: FilledButton(
+                onPressed: busy ? null : updatePassword,
+                child: busy
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Text('Update password'),
               ),
             ),
           ],

@@ -16,6 +16,7 @@ class AppState extends ChangeNotifier {
       busy = false,
       entered = false,
       onboarded = false,
+      passwordRecovery = false,
       offline = false;
   String language = 'en',
       name = '',
@@ -149,7 +150,14 @@ class AppState extends ChangeNotifier {
       entered = signedIn;
       if (signedIn) await _loadProfile();
       _auth = repo.client?.auth.onAuthStateChange.listen((event) async {
+        if (event.event == AuthChangeEvent.passwordRecovery) {
+          passwordRecovery = true;
+          entered = true;
+          notifyListeners();
+          return;
+        }
         if (event.event == AuthChangeEvent.signedOut) {
+          passwordRecovery = false;
           entered = false;
           onboarded = false;
           name = '';
@@ -376,6 +384,28 @@ class AppState extends ChangeNotifier {
       password: password,
       emailRedirectTo: 'in.raithamitra.app://login-callback',
     );
+  }
+
+  Future<void> sendPasswordReset(String email) async {
+    final client = repo.client;
+    if (client == null) {
+      throw StateError('The app connection is not configured.');
+    }
+    await client.auth.resetPasswordForEmail(
+      email.trim(),
+      redirectTo: 'in.raithamitra.app://login-callback',
+    );
+  }
+
+  Future<void> updatePassword(String password) async {
+    final client = repo.client;
+    if (client == null) {
+      throw StateError('The app connection is not configured.');
+    }
+    await client.auth.updateUser(UserAttributes(password: password));
+    passwordRecovery = false;
+    entered = true;
+    notifyListeners();
   }
 
   Future<void> signOut() async {

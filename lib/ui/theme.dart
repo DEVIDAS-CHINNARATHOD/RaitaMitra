@@ -5,7 +5,7 @@ const muted = Color(0xFF596B74);
 const paper = Color(0xFFFFFFFF);
 const line = Color(0xFFDCE9EF);
 const accentBlue = Color(0xFF287A9C);
-const headerBlue = Color(0xFF1F6878);
+const headerBlue = Color(0xFF09BFFE);
 const skyBlue = Color(0xFFB9DCE8);
 const paleBlue = Color(0xFFDCECF2);
 ThemeData appTheme() {

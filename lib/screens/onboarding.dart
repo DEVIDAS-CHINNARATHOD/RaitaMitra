@@ -56,6 +56,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         asset: 'assets/images/raita_mitra_watering_farmer.svg',
                         description: 'Farmer watering seedlings',
                       ),
+                      _OnboardingMarketImage(),
                     ],
                   ),
                 ),
@@ -108,7 +109,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(2, (index) {
+                          children: List.generate(3, (index) {
                             final selected = illustrationPage == index;
                             return GestureDetector(
                               onTap: () => illustrationController.animateToPage(
@@ -238,6 +239,24 @@ class _OnboardingFarmerImage extends StatelessWidget {
     child: ClipRect(
       child: SvgPicture.asset(
         asset,
+        width: double.infinity,
+        height: double.infinity,
+        fit: BoxFit.contain,
+      ),
+    ),
+  );
+}
+
+class _OnboardingMarketImage extends StatelessWidget {
+  const _OnboardingMarketImage();
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    image: true,
+    label: 'Farmer checking market prices and crop reports',
+    child: ClipRect(
+      child: Image.asset(
+        'assets/images/raitha_mitra_login_market.png',
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.contain,

@@ -28,6 +28,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String search = '';
   bool showAllPrices = false;
+  int _marketSlideIndex = 0;
   int? temperatureC, weatherCode;
   bool weatherLoading = true;
   @override
@@ -96,12 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: headerBlue,
-        foregroundColor: Colors.white,
+        foregroundColor: const Color(0xFF082C4C),
         surfaceTintColor: Colors.transparent,
         toolbarHeight: toolbarHeight,
         elevation: 0,
         shadowColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(22)),
         ),
@@ -118,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     s.t('YOUR LOCATION', 'ನಿಮ್ಮ ಸ್ಥಳ'),
                     style: const TextStyle(
-                      color: Colors.white70,
+                      color: Color(0xFF17405E),
                       fontSize: 9,
                       letterSpacing: 0.8,
                       fontWeight: FontWeight.w600,
@@ -130,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFF082C4C),
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -154,16 +155,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 16,
                       child: CircularProgressIndicator(
                         strokeWidth: 1.8,
-                        color: Colors.white,
+                        color: Color(0xFF082C4C),
                       ),
                     )
                   else ...[
-                    Icon(_weatherIcon, color: Colors.white, size: 18),
+                    Icon(
+                      _weatherIcon,
+                      color: const Color(0xFF082C4C),
+                      size: 18,
+                    ),
                     const SizedBox(width: 3),
                     Text(
                       temperatureC == null ? '--°' : '$temperatureC°',
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Color(0xFF082C4C),
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
@@ -176,7 +181,10 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             tooltip: 'Alerts',
             onPressed: () => openPage(context, AlertsScreen(state: s)),
-            icon: const Icon(Icons.notifications_none, color: Colors.white),
+            icon: const Icon(
+              Icons.notifications_none,
+              color: Color(0xFF082C4C),
+            ),
           ),
           IconButton(
             tooltip: s.t('Profile', 'ಪ್ರೊಫೈಲ್'),
@@ -206,138 +214,182 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               children: [
                 const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                    color: headerBlue,
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        s.t('Market at a glance', 'ಮಾರುಕಟ್ಟೆ ಮಾಹಿತಿ'),
-                        style: const TextStyle(
-                          fontSize: 21,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: paleBlue,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 30,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: SizedBox(
+                    height: 174,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        PageView(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        s.t(
-                                          'SELECTED MANDI',
-                                          'ಆಯ್ಕೆ ಮಾಡಿದ ಮಾರುಕಟ್ಟೆ',
-                                        ),
-                                        style: const TextStyle(
-                                          color: accentBlue,
-                                          letterSpacing: 1,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Text(
-                                        s.selectedMarket?.name ??
-                                            s.t(
-                                              'Select a mandi',
-                                              'ಮಾರುಕಟ್ಟೆ ಆಯ್ಕೆಮಾಡಿ',
-                                            ),
-                                        style: const TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
-                                          color: ink,
-                                        ),
-                                      ),
-                                      if (s.selectedMarket != null) ...[
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          '${s.districtName(s.selectedMarket!.districtId)}, Karnataka',
-                                          style: const TextStyle(
-                                            color: muted,
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                      ],
-                                    ],
-                                  ),
-                                ),
-                                TextButton.icon(
-                                  onPressed: () => openPage(
-                                    context,
-                                    ProfileScreen(state: s, editing: true),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.edit_location_alt_outlined,
-                                    size: 16,
-                                  ),
-                                  label: Text(
-                                    s.t('Change mandi', 'ಮಾರುಕಟ್ಟೆ ಬದಲಿಸಿ'),
-                                  ),
-                                ),
-                              ],
+                            Image.asset(
+                              'assets/images/home_market_farmer.png',
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
                             ),
-                            const SizedBox(height: 12),
-                            const Divider(color: line),
-                            const SizedBox(height: 9),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '${s.homePrices.length} ${s.t('available price reports', 'ಬೆಲೆ ವರದಿಗಳು')}',
-                                    style: const TextStyle(
-                                      color: ink,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                                if (s.busy)
-                                  const SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: accentBlue,
-                                    ),
-                                  )
-                                else
-                                  InkWell(
-                                    onTap: () => s.refresh(),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(4),
-                                      child: Icon(
-                                        Icons.refresh,
-                                        size: 20,
-                                        color: ink,
-                                      ),
-                                    ),
-                                  ),
-                              ],
+                            Image.asset(
+                              'assets/images/home_sowing_farmer.png',
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
                             ),
                           ],
+                          onPageChanged: (index) =>
+                              setState(() => _marketSlideIndex = index),
                         ),
-                      ),
-                    ],
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: FractionallySizedBox(
+                            widthFactor: 0.68,
+                            heightFactor: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(14, 12, 4, 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    s.t(
+                                      'SELECTED MANDI',
+                                      'ಆಯ್ಕೆ ಮಾಡಿದ ಮಾರುಕಟ್ಟೆ',
+                                    ),
+                                    style: _marketOverlayText(
+                                      color: const Color(0xFF07547A),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    s.selectedMarket?.name ??
+                                        s.t(
+                                          'Select a mandi',
+                                          'ಮಾರುಕಟ್ಟೆ ಆಯ್ಕೆಮಾಡಿ',
+                                        ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: _marketOverlayText(
+                                      color: const Color(0xFF082C4C),
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  if (s.selectedMarket != null) ...[
+                                    const SizedBox(height: 3),
+                                    Text(
+                                      '${s.districtName(s.selectedMarket!.districtId)}, Karnataka',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: _marketOverlayText(
+                                        color: const Color(0xFF173D59),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                  const Spacer(),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '${s.homePrices.length} ${s.t('available reports', 'ಬೆಲೆ ವರದಿಗಳು')}',
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: _marketOverlayText(
+                                            color: const Color(0xFF082C4C),
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                      if (s.busy)
+                                        const SizedBox(
+                                          width: 16,
+                                          height: 16,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: Color(0xFF082C4C),
+                                          ),
+                                        )
+                                      else
+                                        InkWell(
+                                          onTap: () => s.refresh(),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4),
+                                            child: Icon(
+                                              Icons.refresh,
+                                              size: 20,
+                                              color: const Color(0xFF082C4C),
+                                              shadows: _marketTextShadows,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 9,
+                          right: 9,
+                          child: TextButton.icon(
+                            onPressed: () => openPage(
+                              context,
+                              ProfileScreen(state: s, editing: true),
+                            ),
+                            style: TextButton.styleFrom(
+                              foregroundColor: const Color(0xFF082C4C),
+                              backgroundColor: Colors.white.withValues(
+                                alpha: 0.94,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
+                              ),
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            icon: const Icon(
+                              Icons.edit_location_alt_outlined,
+                              size: 15,
+                            ),
+                            label: Text(
+                              s.t('Change mandi', 'ಮಾರುಕಟ್ಟೆ ಬದಲಿಸಿ'),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 8,
+                          right: 12,
+                          child: Row(
+                            children: List.generate(
+                              2,
+                              (index) => AnimatedContainer(
+                                duration: const Duration(milliseconds: 180),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 3,
+                                ),
+                                width: _marketSlideIndex == index ? 16 : 6,
+                                height: 6,
+                                decoration: BoxDecoration(
+                                  color: _marketSlideIndex == index
+                                      ? const Color(0xFF082C4C)
+                                      : Colors.white.withValues(alpha: 0.9),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SectionLabel(
@@ -468,3 +520,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+const _marketTextShadows = <Shadow>[
+  Shadow(color: Color(0xBFFFFFFF), blurRadius: 5, offset: Offset(0, 1)),
+];
+
+TextStyle _marketOverlayText({
+  required Color color,
+  required double fontSize,
+  required FontWeight fontWeight,
+  double letterSpacing = 0,
+}) => TextStyle(
+  color: color,
+  fontSize: fontSize,
+  fontWeight: fontWeight,
+  letterSpacing: letterSpacing,
+  shadows: _marketTextShadows,
+);
