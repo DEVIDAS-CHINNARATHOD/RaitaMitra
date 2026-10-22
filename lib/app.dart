@@ -156,9 +156,12 @@ class _MainShellState extends State<MainShell> {
         minimum: const EdgeInsets.fromLTRB(16, 8, 16, 12),
         child: Container(
           decoration: BoxDecoration(
-            color: paleBlue,
+            gradient: const LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [navBlueStart, navBlueEnd],
+            ),
             borderRadius: BorderRadius.circular(28),
-            border: Border.all(color: line),
           ),
           clipBehavior: Clip.antiAlias,
           child: NavigationBar(

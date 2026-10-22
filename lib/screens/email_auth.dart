@@ -89,6 +89,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
+      flexibleSpace: const ScenicAppBarBackground(),
       title: Text(registering ? 'Create account' : 'Email sign in'),
     ),
     body: SafeArea(
@@ -274,7 +275,10 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Set a new password')),
+    appBar: AppBar(
+      flexibleSpace: const ScenicAppBarBackground(),
+      title: const Text('Set a new password'),
+    ),
     body: SafeArea(
       child: Form(
         key: formKey,

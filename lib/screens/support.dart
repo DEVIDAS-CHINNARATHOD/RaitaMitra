@@ -33,7 +33,10 @@ class SupportScreen extends StatelessWidget {
   final AppState state;
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(state.t('Support', 'ಸಹಾಯ'))),
+    appBar: AppBar(
+      flexibleSpace: const ScenicAppBarBackground(),
+      title: Text(state.t('Support', 'ಸಹಾಯ')),
+    ),
     body: PageBody(
       children: [
         Text(
@@ -125,7 +128,9 @@ class ProfileTabScreen extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: state,
     builder: (context, _) => Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
         title: Text(state.t('Profile', 'ಪ್ರೊಫೈಲ್')),
         actions: [
           IconButton(
@@ -136,11 +141,11 @@ class ProfileTabScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: PageBody(
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
         children: [
-          const SizedBox(height: 8),
-          Center(child: ProfileAvatar(photo: state.avatarUrl, radius: 42)),
-          const SizedBox(height: 14),
+          Center(child: ProfileAvatar(photo: state.avatarUrl, radius: 48)),
+          const SizedBox(height: 12),
           Center(
             child: Text(
               state.name.isEmpty
@@ -149,83 +154,288 @@ class ProfileTabScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           Center(
             child: Text(
-              state.signedIn ? 'Account connected' : 'Saved on this device',
-              style: const TextStyle(color: muted),
+              state.t(
+                state.signedIn ? 'Account connected' : 'Saved on this device',
+                state.signedIn
+                    ? 'ಖಾತೆ ಸಂಪರ್ಕಗೊಂಡಿದೆ'
+                    : 'ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ',
+              ),
+              style: const TextStyle(color: muted, fontSize: 14),
             ),
           ),
-          const SizedBox(height: 24),
-          Card(
-            child: Column(
+          const SizedBox(height: 22),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: line),
+              borderRadius: BorderRadius.circular(22),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Row(
               children: [
-                if (state.repo.client?.auth.currentUser?.email
-                    case final email?)
-                  ListTile(
-                    leading: const Icon(
-                      Icons.email_outlined,
-                      color: accentBlue,
-                    ),
-                    title: Text(state.t('Account email', 'ಖಾತೆಯ ಇಮೇಲ್')),
-                    subtitle: Text(email),
-                  ),
-                if (state.repo.client?.auth.currentUser?.email != null)
-                  const Divider(indent: 16, endIndent: 16, height: 1),
-                ListTile(
-                  leading: const Icon(
-                    Icons.location_on_outlined,
-                    color: accentBlue,
-                  ),
-                  title: Text(state.t('Preferred mandi', 'ಆದ್ಯತೆಯ ಮಾರುಕಟ್ಟೆ')),
-                  subtitle: Text(
-                    state.selectedMarket?.name ??
-                        state.t('Not selected', 'ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ'),
+                Expanded(
+                  child: _ProfileStat(
+                    icon: Icons.location_on_outlined,
+                    value: state.districtId.isEmpty
+                        ? state.t('Not set', 'ಹೊಂದಿಸಿಲ್ಲ')
+                        : state.districtName(state.districtId),
+                    label: state.t('District', 'ಜಿಲ್ಲೆ'),
                   ),
                 ),
-                const Divider(indent: 16, endIndent: 16, height: 1),
-                ListTile(
-                  leading: const Icon(Icons.map_outlined, color: accentBlue),
-                  title: Text(state.t('District', 'ಜಿಲ್ಲೆ')),
-                  subtitle: Text(
-                    state.districtId.isEmpty
-                        ? '—'
-                        : state.districtName(state.districtId),
+                const _ProfileStatDivider(),
+                Expanded(
+                  child: _ProfileStat(
+                    icon: Icons.storefront_outlined,
+                    value:
+                        state.selectedMarket?.name ??
+                        state.t('Not set', 'ಹೊಂದಿಸಿಲ್ಲ'),
+                    label: state.t('Preferred mandi', 'ಆದ್ಯತೆಯ ಮಾರುಕಟ್ಟೆ'),
+                  ),
+                ),
+                const _ProfileStatDivider(),
+                Expanded(
+                  child: _ProfileStat(
+                    icon: Icons.spa_outlined,
+                    value: '${state.crops.length}',
+                    label: state.t('Saved crops', 'ಉಳಿಸಿದ ಬೆಳೆಗಳು'),
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 16),
-          FilledButton.icon(
-            onPressed: () =>
-                openPage(context, ProfileScreen(state: state, editing: true)),
-            icon: const Icon(Icons.edit_outlined),
-            label: Text(
-              state.t('Edit profile details', 'ಪ್ರೊಫೈಲ್ ವಿವರಗಳನ್ನು ಬದಲಾಯಿಸಿ'),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: line),
+              borderRadius: BorderRadius.circular(22),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: Column(
+              children: [
+                _ProfileOption(
+                  icon: Icons.person_outline,
+                  title: state.t('Account', 'ಖಾತೆ'),
+                  subtitle: state.t(
+                    'View and edit basic details',
+                    'ವಿವರಗಳನ್ನು ನೋಡಿ ಮತ್ತು ಸಂಪಾದಿಸಿ',
+                  ),
+                  onTap: () => openPage(
+                    context,
+                    ProfileScreen(state: state, editing: true),
+                  ),
+                ),
+                const Divider(height: 1),
+                _ProfileOption(
+                  icon: Icons.settings_outlined,
+                  title: state.t('Settings', 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು'),
+                  subtitle: state.t(
+                    'Language and app preferences',
+                    'ಭಾಷೆ ಮತ್ತು ಆ್ಯಪ್ ಆದ್ಯತೆಗಳು',
+                  ),
+                  onTap: () => openPage(context, SettingsScreen(state: state)),
+                ),
+                const Divider(height: 1),
+                _ProfileOption(
+                  icon: Icons.help_outline,
+                  title: state.t('Help and support', 'ಸಹಾಯ ಮತ್ತು ಬೆಂಬಲ'),
+                  subtitle: state.t(
+                    'FAQs and contact',
+                    'ಪ್ರಶ್ನೆಗಳು ಮತ್ತು ಸಂಪರ್ಕ',
+                  ),
+                  onTap: () => openPage(context, HelpScreen(state: state)),
+                ),
+                const Divider(height: 1),
+                _ProfileOption(
+                  icon: Icons.description_outlined,
+                  title: state.t(
+                    'Terms and conditions',
+                    'ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು',
+                  ),
+                  subtitle: state.t('Read our policies', 'ನಮ್ಮ ನೀತಿಗಳನ್ನು ಓದಿ'),
+                  onTap: () => openPage(
+                    context,
+                    _ProfileInfoScreen(
+                      title: state.t(
+                        'Terms and conditions',
+                        'ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು',
+                      ),
+                      icon: Icons.description_outlined,
+                      body:
+                          'Raitha Mitra provides market information and crop tools for general guidance. Prices and other reports may be delayed or incomplete. Confirm important decisions with the relevant market or official service. By using the app, you agree to use its information responsibly.',
+                    ),
+                  ),
+                ),
+                const Divider(height: 1),
+                _ProfileOption(
+                  icon: Icons.school_outlined,
+                  title: state.t('Credits', 'ಕೃತಜ್ಞತೆಗಳು'),
+                  subtitle: state.t('Student project', 'ವಿದ್ಯಾರ್ಥಿ ಯೋಜನೆ'),
+                  onTap: () => openPage(
+                    context,
+                    const _ProfileInfoScreen(
+                      title: 'Student Credits',
+                      icon: Icons.school_outlined,
+                      body:
+                          'Raitha Mitra is an independent student project created to make Karnataka market information and crop planning tools easier to access.',
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 10),
-          OutlinedButton.icon(
+          const SizedBox(height: 16),
+          OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              minimumSize: const Size.fromHeight(72),
+              foregroundColor: const Color(0xFFE52323),
+              side: const BorderSide(color: Color(0xFFFF3333)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(22),
+              ),
+            ),
             onPressed: () async {
               await state.signOut();
               if (context.mounted) {
                 Navigator.popUntil(context, (route) => route.isFirst);
               }
             },
-            icon: const Icon(Icons.logout),
-            label: Text(state.t('Log out', 'ಲಾಗ್ ಔಟ್')),
-          ),
-          const SizedBox(height: 10),
-          OutlinedButton.icon(
-            onPressed: () => openPage(context, SettingsScreen(state: state)),
-            icon: const Icon(Icons.settings_outlined),
-            label: Text(
-              state.t('Settings and account', 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಮತ್ತು ಖಾತೆ'),
+            child: Row(
+              children: [
+                const SizedBox(width: 18),
+                const Icon(Icons.logout, size: 28),
+                const SizedBox(width: 24),
+                Expanded(
+                  child: Text(
+                    state.t('Sign out', 'ಸೈನ್ ಔಟ್'),
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: blueMuted),
+                const SizedBox(width: 8),
+              ],
             ),
           ),
         ],
       ),
+    ),
+  );
+}
+
+class _ProfileStat extends StatelessWidget {
+  const _ProfileStat({
+    required this.icon,
+    required this.value,
+    required this.label,
+  });
+  final IconData icon;
+  final String value, label;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 4),
+    child: Column(
+      children: [
+        Icon(icon, size: 28, color: const Color(0xFF64758A)),
+        const SizedBox(height: 10),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 15, color: ink),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 12, color: muted),
+        ),
+      ],
+    ),
+  );
+}
+
+class _ProfileStatDivider extends StatelessWidget {
+  const _ProfileStatDivider();
+  @override
+  Widget build(BuildContext context) =>
+      Container(height: 88, width: 1, color: line);
+}
+
+class _ProfileOption extends StatelessWidget {
+  const _ProfileOption({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+  final IconData icon;
+  final String title, subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    height: 88,
+    child: InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          SizedBox(width: 72, child: Icon(icon, size: 28, color: ink)),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: const TextStyle(fontSize: 16, color: ink)),
+                const SizedBox(height: 3),
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 13, color: muted),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 4),
+          const Icon(Icons.chevron_right, color: ink, size: 23),
+        ],
+      ),
+    ),
+  );
+}
+
+class _ProfileInfoScreen extends StatelessWidget {
+  const _ProfileInfoScreen({
+    required this.title,
+    required this.icon,
+    required this.body,
+  });
+  final String title, body;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(
+      flexibleSpace: const ScenicAppBarBackground(),
+      title: Text(title),
+    ),
+    body: PageBody(
+      children: [
+        const SizedBox(height: 12),
+        Icon(icon, size: 44, color: accentBlue),
+        const SizedBox(height: 20),
+        Text(body, style: const TextStyle(fontSize: 16, height: 1.6)),
+      ],
     ),
   );
 }
@@ -235,7 +445,10 @@ class PortalScreen extends StatelessWidget {
   final Map<String, String> portal;
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Official service')),
+    appBar: AppBar(
+      flexibleSpace: const ScenicAppBarBackground(),
+      title: const Text('Official service'),
+    ),
     body: PageBody(
       children: [
         const SizedBox(height: 18),
@@ -296,7 +509,10 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: state,
     builder: (context, _) => Scaffold(
-      appBar: AppBar(title: Text(state.t('Settings', 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು'))),
+      appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
+        title: Text(state.t('Settings', 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು')),
+      ),
       body: PageBody(
         children: [
           Card(
@@ -506,6 +722,7 @@ class AlertsScreen extends StatelessWidget {
     listenable: state,
     builder: (context, _) => Scaffold(
       appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
         title: const Text('Price watchlist'),
         actions: [
           IconButton(
@@ -668,7 +885,10 @@ class _HelpScreenState extends State<HelpScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(widget.state.t('Ask Mitra', 'ಮಿತ್ರನನ್ನು ಕೇಳಿ'))),
+    appBar: AppBar(
+      flexibleSpace: const ScenicAppBarBackground(),
+      title: Text(widget.state.t('Ask Mitra', 'ಮಿತ್ರನನ್ನು ಕೇಳಿ')),
+    ),
     body: Column(
       children: [
         Expanded(

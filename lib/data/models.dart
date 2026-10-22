@@ -48,6 +48,7 @@ class Price {
       ? null
       : (modal - previous!) / previous! * 100;
   bool get old => DateTime.now().difference(date).inDays > 3;
+  bool get isDemo => json['is_demo'] == true;
 }
 
 class FarmCrop {

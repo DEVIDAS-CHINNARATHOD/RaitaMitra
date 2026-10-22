@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'models.dart';
+import 'demo_price_provider.dart';
 import '../config.dart';
 import 'package:http/http.dart' as http;
 
@@ -129,7 +130,7 @@ class Repository {
   }
 
   Future<CachedSnapshot> prices({bool force = false}) =>
-      cached('latest_prices', const Duration(hours: 1), () async {
+      cached('latest_prices', const Duration(days: 3650), () async {
         if (client == null) {
           throw StateError('Market connection is not configured.');
         }
@@ -149,6 +150,7 @@ class Repository {
         return result;
       }, force: force);
   Future<List<Price>> history(Price price) async {
+    if (price.isDemo) return DemoPriceProvider.history(price);
     final result = await cached(
       'history:${price.marketId}:${price.commodityId}:${price.variety}:${price.grade}',
       const Duration(hours: 6),
@@ -175,6 +177,43 @@ class Repository {
         .toList()
         .reversed
         .toList();
+  }
+
+  Future<Json> priceOutlook(
+    Price price, {
+    String language = 'en',
+    bool force = false,
+  }) async {
+    if (price.isDemo) {
+      throw StateError('LLM forecasts are disabled for synthetic demo prices.');
+    }
+    final activeClient = client;
+    if (activeClient == null) {
+      throw StateError('The market connection is not configured.');
+    }
+    if (activeClient.auth.currentUser == null) {
+      throw StateError('Sign in to request an LLM price outlook.');
+    }
+    final key =
+        'llm_outlook:$language:${price.marketId}:${price.commodityId}:${price.variety}:${price.grade}:${dateOnly(price.date)}:${price.modal}';
+    final result = await cached(key, const Duration(days: 3650), () async {
+      final response = await activeClient.functions.invoke(
+        'ask-mitra',
+        body: {
+          'mode': 'price_outlook',
+          'market_id': price.marketId,
+          'commodity_id': price.commodityId,
+          'variety': price.variety,
+          'grade': price.grade,
+          'language': language,
+        },
+      );
+      if (response.data is! Map) {
+        throw StateError('The LLM did not return a price outlook.');
+      }
+      return Map<String, dynamic>.from(response.data as Map);
+    }, force: force);
+    return Map<String, dynamic>.from(result.data as Map);
   }
 
   Future<List<Json>> forecasts(Price price) async {

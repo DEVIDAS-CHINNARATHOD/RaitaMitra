@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const toolbarHeight = 78.0;
+    const toolbarHeight = 92.0;
     final s = widget.state;
     final prices = s.homePrices
         .where((p) => p.name.toLowerCase().contains(search.toLowerCase()))
@@ -96,8 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: headerBlue,
-        foregroundColor: const Color(0xFF082C4C),
+        flexibleSpace: const ScenicAppBarBackground(),
+        backgroundColor: Colors.transparent,
+        foregroundColor: blueInk,
         surfaceTintColor: Colors.transparent,
         toolbarHeight: toolbarHeight,
         elevation: 0,
@@ -119,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     s.t('YOUR LOCATION', 'ನಿಮ್ಮ ಸ್ಥಳ'),
                     style: const TextStyle(
-                      color: Color(0xFF17405E),
+                      color: blueMuted,
                       fontSize: 9,
                       letterSpacing: 0.8,
                       fontWeight: FontWeight.w600,
@@ -131,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Color(0xFF082C4C),
+                      color: blueInk,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -155,20 +156,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 16,
                       child: CircularProgressIndicator(
                         strokeWidth: 1.8,
-                        color: Color(0xFF082C4C),
+                        color: blueInk,
                       ),
                     )
                   else ...[
-                    Icon(
-                      _weatherIcon,
-                      color: const Color(0xFF082C4C),
-                      size: 18,
-                    ),
+                    Icon(_weatherIcon, color: blueInk, size: 18),
                     const SizedBox(width: 3),
                     Text(
                       temperatureC == null ? '--°' : '$temperatureC°',
                       style: const TextStyle(
-                        color: Color(0xFF082C4C),
+                        color: blueInk,
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
@@ -181,10 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             tooltip: 'Alerts',
             onPressed: () => openPage(context, AlertsScreen(state: s)),
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Color(0xFF082C4C),
-            ),
+            icon: const Icon(Icons.notifications_none, color: blueInk),
           ),
           IconButton(
             tooltip: s.t('Profile', 'ಪ್ರೊಫೈಲ್'),
@@ -195,13 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.paddingOf(context).top + toolbarHeight,
-            child: const ColoredBox(color: Colors.white),
-          ),
           RefreshIndicator(
             onRefresh: () => s.refresh(),
             child: ListView(
@@ -213,9 +200,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 100,
               ),
               children: [
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(20),
                   child: SizedBox(
                     height: 174,
                     child: Stack(
@@ -237,6 +224,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPageChanged: (index) =>
                               setState(() => _marketSlideIndex = index),
                         ),
+                        IgnorePointer(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Colors.white.withValues(alpha: .76),
+                                  Colors.white.withValues(alpha: .30),
+                                  Colors.transparent,
+                                ],
+                                stops: const [0, .48, .82],
+                              ),
+                            ),
+                          ),
+                        ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: FractionallySizedBox(
@@ -253,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       'ಆಯ್ಕೆ ಮಾಡಿದ ಮಾರುಕಟ್ಟೆ',
                                     ),
                                     style: _marketOverlayText(
-                                      color: const Color(0xFF07547A),
+                                      color: blueText,
                                       fontSize: 10,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 1,
@@ -269,63 +272,70 @@ class _HomeScreenState extends State<HomeScreen> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: _marketOverlayText(
-                                      color: const Color(0xFF082C4C),
+                                      color: blueInk,
                                       fontSize: 19,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   if (s.selectedMarket != null) ...[
-                                    const SizedBox(height: 3),
-                                    Text(
-                                      '${s.districtName(s.selectedMarket!.districtId)}, Karnataka',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: _marketOverlayText(
-                                        color: const Color(0xFF173D59),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                  const Spacer(),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '${s.homePrices.length} ${s.t('available reports', 'ಬೆಲೆ ವರದಿಗಳು')}',
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: _marketOverlayText(
-                                            color: const Color(0xFF082C4C),
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.location_on,
+                                          size: 14,
+                                          color: blueMuted,
                                         ),
-                                      ),
-                                      if (s.busy)
-                                        const SizedBox(
-                                          width: 16,
-                                          height: 16,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            color: Color(0xFF082C4C),
-                                          ),
-                                        )
-                                      else
-                                        InkWell(
-                                          onTap: () => s.refresh(),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(4),
-                                            child: Icon(
-                                              Icons.refresh,
-                                              size: 20,
-                                              color: const Color(0xFF082C4C),
-                                              shadows: _marketTextShadows,
+                                        const SizedBox(width: 3),
+                                        Expanded(
+                                          child: Text(
+                                            '${s.districtName(s.selectedMarket!.districtId)}, Karnataka',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: _marketOverlayText(
+                                              color: blueMuted,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                         ),
-                                    ],
-                                  ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 9,
+                                        vertical: 6,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xBFEAF6FC),
+                                        borderRadius: BorderRadius.circular(18),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(
+                                            Icons.receipt_long_outlined,
+                                            size: 14,
+                                            color: accentBlue,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Flexible(
+                                            child: Text(
+                                              '${s.homePrices.length} ${s.t('available reports', 'ಬೆಲೆ ವರದಿಗಳು')}',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                color: blueText,
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ],
                               ),
                             ),
@@ -340,20 +350,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               ProfileScreen(state: s, editing: true),
                             ),
                             style: TextButton.styleFrom(
-                              foregroundColor: const Color(0xFF082C4C),
+                              foregroundColor: blueInk,
                               backgroundColor: Colors.white.withValues(
                                 alpha: 0.94,
                               ),
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 6,
+                                horizontal: 11,
+                                vertical: 7,
                               ),
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               visualDensity: VisualDensity.compact,
                             ),
                             icon: const Icon(
-                              Icons.edit_location_alt_outlined,
+                              Icons.swap_horiz_rounded,
                               size: 15,
                             ),
                             label: Text(
@@ -380,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 6,
                                 decoration: BoxDecoration(
                                   color: _marketSlideIndex == index
-                                      ? const Color(0xFF082C4C)
+                                      ? blueInk
                                       : Colors.white.withValues(alpha: 0.9),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -467,10 +477,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
                 const SizedBox(height: 10),
                 Text(
-                  s.t(
-                    'Source: data.gov.in · Coverage may be partial. Each price shows its report date.',
-                    'ಮೂಲ: data.gov.in · ಪ್ರತಿ ಬೆಲೆಯ ವರದಿ ದಿನಾಂಕ ನೋಡಿ.',
-                  ),
+                  prices.any((p) => p.isDemo)
+                      ? 'Sample prices are simulated examples with sample report dates. They are not live market quotes.'
+                      : 'Source: data.gov.in · Each price shows its report date.',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SectionLabel(

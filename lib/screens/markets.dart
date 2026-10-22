@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../state.dart';
 import '../data/models.dart';
+import '../data/price_outlook.dart';
+import '../data/demo_price_provider.dart';
 import '../ui/theme.dart';
 import '../ui/widgets.dart';
 
@@ -30,6 +32,7 @@ class _MarketsScreenState extends State<MarketsScreen> {
         .toList();
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
         title: Text(s.t('Markets', 'ಮಾರುಕಟ್ಟೆಗಳು')),
         actions: [
           IconButton(
@@ -149,13 +152,22 @@ class MarketScreen extends StatelessWidget {
           .where((p) => p.marketId == market.id)
           .toList();
       return Scaffold(
-        appBar: AppBar(title: Text(market.name)),
+        appBar: AppBar(
+          flexibleSpace: const ScenicAppBarBackground(),
+          title: Text(market.name),
+        ),
         body: PageBody(
           children: [
             Text(
               state.districtName(market.districtId),
               style: const TextStyle(color: muted),
             ),
+            if (prices.any((p) => p.isDemo)) ...[
+              const SizedBox(height: 12),
+              const Notice(
+                'Sample market report · Prices and report dates are simulated examples, not live mandi quotes.',
+              ),
+            ],
             const SizedBox(height: 18),
             OutlinedButton.icon(
               onPressed: () async {
@@ -268,7 +280,10 @@ class _CompareScreenState extends State<CompareScreen> {
             .toList()
           ..sort((a, b) => b.modal.compareTo(a.modal));
     return Scaffold(
-      appBar: AppBar(title: const Text('Compare mandis')),
+      appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
+        title: const Text('Compare mandis'),
+      ),
       body: PageBody(
         children: [
           Text(
@@ -363,15 +378,22 @@ class _PriceScreenState extends State<PriceScreen> {
   @override
   void initState() {
     super.initState();
-    history = widget.state.repo.history(widget.price);
-    forecasts = widget.state.repo.forecasts(widget.price);
+    history = widget.price.isDemo
+        ? Future.value(DemoPriceProvider.history(widget.price))
+        : widget.state.repo.history(widget.price);
+    forecasts = widget.price.isDemo
+        ? Future.value(const <Json>[])
+        : widget.state.repo.forecasts(widget.price);
   }
 
   @override
   Widget build(BuildContext context) {
     final p = widget.price;
     return Scaffold(
-      appBar: AppBar(title: Text(p.name)),
+      appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
+        title: Text(p.name),
+      ),
       body: PageBody(
         children: [
           Text(
@@ -385,8 +407,8 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'REPORTED MODAL PRICE',
+                  Text(
+                    p.isDemo ? 'SAMPLE MODAL PRICE' : 'REPORTED MODAL PRICE',
                     style: TextStyle(
                       fontSize: 10,
                       letterSpacing: 1.4,
@@ -439,6 +461,17 @@ class _PriceScreenState extends State<PriceScreen> {
               'This report is more than three days old. It is not a live quote.',
             ),
           ],
+          SectionLabel(
+            p.isDemo ? 'Market report & selling guide' : 'Early price outlook',
+          ),
+          FutureBuilder<List<Price>>(
+            future: history,
+            builder: (context, snapshot) => EarlyPriceOutlook(
+              state: widget.state,
+              price: p,
+              history: snapshot.data ?? const [],
+            ),
+          ),
           const SectionLabel('Price history'),
           FutureBuilder<List<Price>>(
             future: history,
@@ -515,17 +548,24 @@ class _PriceScreenState extends State<PriceScreen> {
               );
             },
           ),
-          const SectionLabel('Forecast by date'),
+          SectionLabel(
+            p.isDemo
+                ? 'Live forecast unavailable for sample data'
+                : 'Forecast by date',
+          ),
           FutureBuilder<List<Json>>(
             future: forecasts,
             builder: (context, snapshot) {
               final rows = snapshot.data ?? [];
               if (rows.isEmpty) {
-                return const EmptyPanel(
+                return EmptyPanel(
                   icon: Icons.event_note_outlined,
-                  title: 'Forecast not available yet',
-                  body:
-                      'Price estimates will appear here when forecasts are available for this market. No selling recommendation is available yet.',
+                  title: p.isDemo
+                      ? 'Sample report only'
+                      : 'Forecast not available yet',
+                  body: p.isDemo
+                      ? 'The sample selling guide above uses simulated prices. A live AI outlook will be available after verified market reports are added.'
+                      : 'Price estimates will appear here when forecasts are available for this market.',
                 );
               }
               return Card(
@@ -557,14 +597,304 @@ class _PriceScreenState extends State<PriceScreen> {
             label: const Text('Compare this variety'),
           ),
           const SizedBox(height: 20),
-          const Text(
-            'Source: data.gov.in · Variety-wise Daily Market Prices. Actual sale prices can differ from reported modal prices.',
-            style: TextStyle(fontSize: 12, color: muted),
+          Text(
+            p.isDemo
+                ? 'Sample dataset · Simulated prices and dates for preview only; not live market information.'
+                : 'Source: data.gov.in · Actual sale prices can differ from reported modal prices.',
+            style: const TextStyle(fontSize: 12, color: muted),
           ),
         ],
       ),
     );
   }
+}
+
+class EarlyPriceOutlook extends StatefulWidget {
+  const EarlyPriceOutlook({
+    super.key,
+    required this.state,
+    required this.price,
+    required this.history,
+  });
+
+  final AppState state;
+  final Price price;
+  final List<Price> history;
+
+  @override
+  State<EarlyPriceOutlook> createState() => _EarlyPriceOutlookState();
+}
+
+class _EarlyPriceOutlookState extends State<EarlyPriceOutlook> {
+  Future<Json>? prediction;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPrediction();
+  }
+
+  void _loadPrediction({bool force = false}) {
+    if (widget.price.isDemo) return;
+    prediction = widget.state.repo.priceOutlook(
+      widget.price,
+      language: widget.state.language,
+      force: force,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final price = widget.price;
+    final outlook = PriceOutlook.fromReports(price, widget.history);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.insights_outlined, color: accentBlue, size: 20),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Reported range · ₹ / quintal',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _OutlookValue(label: 'Low seen', value: outlook.low),
+                ),
+                Expanded(
+                  child: _OutlookValue(
+                    label: 'Current modal',
+                    value: price.modal,
+                    emphasized: true,
+                  ),
+                ),
+                Expanded(
+                  child: _OutlookValue(label: 'High seen', value: outlook.high),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Text(
+              'Reported prices · ${outlook.reportCount} dated observations',
+              style: const TextStyle(fontSize: 11, color: muted),
+            ),
+            const Divider(height: 24),
+            if (price.isDemo)
+              _DemoSellingGuide(price: price, history: widget.history)
+            else
+              FutureBuilder<Json>(
+                future: prediction!,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Text('Generating LLM price outlook…'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  final data = snapshot.data;
+                  if (snapshot.hasError || data == null) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.state.signedIn
+                              ? 'LLM outlook unavailable. It needs an internet connection and at least three dated reports.'
+                              : 'Sign in to request an LLM price outlook. At least three dated reports are needed.',
+                          style: const TextStyle(
+                            fontSize: 13,
+                            height: 1.45,
+                            color: muted,
+                          ),
+                        ),
+                        if (widget.state.signedIn)
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton.icon(
+                              onPressed: () =>
+                                  setState(() => _loadPrediction(force: true)),
+                              icon: const Icon(Icons.refresh, size: 17),
+                              label: const Text('Try again'),
+                            ),
+                          ),
+                      ],
+                    );
+                  }
+                  final low = number(data['low']);
+                  final expected = number(data['expected']);
+                  final high = number(data['high']);
+                  final advice = data['sell_advice']?.toString() ?? '';
+                  if (low == null ||
+                      expected == null ||
+                      high == null ||
+                      advice.isEmpty) {
+                    return const Text(
+                      'The LLM response was incomplete. Use the reported prices and check again later.',
+                      style: TextStyle(fontSize: 13, color: muted),
+                    );
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'LLM estimate · next 7 days · ₹ / quintal',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 14),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _OutlookValue(label: 'Low', value: low),
+                          ),
+                          Expanded(
+                            child: _OutlookValue(
+                              label: 'Expected',
+                              value: expected,
+                              emphasized: true,
+                            ),
+                          ),
+                          Expanded(
+                            child: _OutlookValue(label: 'High', value: high),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.tips_and_updates_outlined,
+                            size: 20,
+                            color: accentBlue,
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              advice,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                height: 1.45,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Confidence: ${data['confidence'] ?? 'low'} · Based on ${data['report_count'] ?? 'recent'} reports.',
+                        style: const TextStyle(fontSize: 11, color: muted),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            const SizedBox(height: 12),
+            if (!price.isDemo)
+              const Text(
+                'AI estimates can be wrong and are not a guarantee. Check the latest mandi quote and account for your costs before selling.',
+                style: TextStyle(fontSize: 11, color: muted, height: 1.4),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DemoSellingGuide extends StatelessWidget {
+  const _DemoSellingGuide({required this.price, required this.history});
+  final Price price;
+  final List<Price> history;
+
+  @override
+  Widget build(BuildContext context) {
+    final average = history.isEmpty
+        ? price.modal
+        : history.map((p) => p.modal).reduce((a, b) => a + b) / history.length;
+    final advice = price.modal >= average * 1.015
+        ? 'Sample suggestion: the current price is above its recent sample average. If your crop is ready, compare nearby mandi quotes and consider selling in batches.'
+        : price.modal <= average * .985
+        ? 'Sample suggestion: the current price is below its recent sample average. If storage and crop quality allow, check the next dated report before deciding.'
+        : 'Sample suggestion: the current price is close to its recent sample average. Consider staggered selling and compare nearby mandi quotes.';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.lightbulb_outline, color: accentBlue, size: 19),
+            const SizedBox(width: 8),
+            const Expanded(
+              child: Text(
+                'Sample selling guide',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 9),
+        Text(advice, style: const TextStyle(fontSize: 13, height: 1.45)),
+        const SizedBox(height: 8),
+        Text(
+          'Sample report dated ${dayLabel(price.date)} · Guidance uses simulated prices, not a live forecast.',
+          style: const TextStyle(fontSize: 11, color: muted, height: 1.4),
+        ),
+      ],
+    );
+  }
+}
+
+class _OutlookValue extends StatelessWidget {
+  const _OutlookValue({
+    required this.label,
+    required this.value,
+    this.emphasized = false,
+  });
+
+  final String label;
+  final double value;
+  final bool emphasized;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      Text(
+        label,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 11, color: muted),
+      ),
+      const SizedBox(height: 5),
+      Text(
+        money(value),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: emphasized ? 16 : 14,
+          fontWeight: FontWeight.w600,
+          color: emphasized ? accentBlue : ink,
+        ),
+      ),
+    ],
+  );
 }
 
 class HistoryPainter extends CustomPainter {

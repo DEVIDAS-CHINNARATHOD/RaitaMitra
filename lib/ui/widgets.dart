@@ -144,68 +144,103 @@ class PriceTile extends StatelessWidget {
     onTap: onTap,
     borderRadius: BorderRadius.circular(12),
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+      child: Row(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          CommodityThumbnail(name: price.name, size: 54),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  showMarket ? price.marketName : cropLabel(price.name),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  showMarket
+                      ? [
+                          price.variety,
+                          price.grade,
+                        ].where((s) => s.isNotEmpty).join(' · ')
+                      : '${price.variety.isEmpty ? 'Local' : price.variety} · ${price.marketName}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 7),
+                Row(
                   children: [
-                    Text(
-                      showMarket ? price.marketName : cropLabel(price.name),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      [
-                        price.variety,
-                        price.grade,
-                      ].where((s) => s.isNotEmpty).join(' · '),
-                      style: Theme.of(context).textTheme.bodySmall,
+                    Icon(Icons.calendar_today_outlined, size: 13, color: muted),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        dayLabel(price.date),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 11, color: muted),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    money(price.modal),
-                    style: const TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.w600,
-                      color: ink,
+                const SizedBox(height: 7),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Low ${price.min == null ? '—' : money(price.min!)}  ·  High ${price.max == null ? '—' : money(price.max!)}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 10, color: muted),
+                      ),
                     ),
-                  ),
-                  const Text(
-                    'per quintal',
-                    style: TextStyle(fontSize: 11, color: muted),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 12),
-          Row(
+          const SizedBox(width: 8),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(
-                child: Text(
-                  'Reported ${dayLabel(price.date)}',
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: price.old ? const Color(0xFF956A24) : muted,
-                  ),
+              Text(
+                money(price.modal),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: blueInk,
                 ),
               ),
+              const Text(
+                'per quintal',
+                style: TextStyle(fontSize: 10, color: muted),
+              ),
+              const SizedBox(height: 7),
               if (price.change != null)
-                Text(
-                  '${price.change! >= 0 ? '+' : ''}${price.change!.toStringAsFixed(1)}% vs previous',
-                  style: const TextStyle(fontSize: 11, color: ink),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: price.change! >= 0
+                        ? const Color(0xFFE7F7EF)
+                        : const Color(0xFFFFEEEE),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    '${price.change! >= 0 ? '▲' : '▼'} ${price.change!.abs().toStringAsFixed(0)}%',
+                    style: TextStyle(
+                      color: price.change! >= 0
+                          ? const Color(0xFF169B65)
+                          : const Color(0xFFE34A4A),
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -213,6 +248,46 @@ class PriceTile extends StatelessWidget {
       ),
     ),
   );
+}
+
+/// A ready sized slot for the matching local crop photo.
+class CommodityThumbnail extends StatelessWidget {
+  const CommodityThumbnail({super.key, required this.name, this.size = 54});
+  final String name;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final slug = name
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
+        .replaceAll(RegExp(r'^_+|_+$'), '');
+    final fileSlug = slug == 'cucumbar_kheera' ? 'cucumber_kheera' : slug;
+    final imagePath = 'assets/images/crops/$fileSlug.png';
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      clipBehavior: Clip.antiAlias,
+      alignment: Alignment.center,
+      child: Image.asset(
+        imagePath,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        semanticLabel: name,
+        errorBuilder: (context, error, stackTrace) => Icon(
+          Icons.eco_outlined,
+          color: const Color(0xFF79A978),
+          size: size * .48,
+          semanticLabel: '$name image placeholder',
+        ),
+      ),
+    );
+  }
 }
 
 void toast(BuildContext context, String text) =>

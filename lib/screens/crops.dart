@@ -7,15 +7,18 @@ import '../ui/theme.dart';
 import '../ui/widgets.dart';
 import 'markets.dart';
 
-List<Price> cropPrices(AppState s, FarmCrop crop) => s.prices
-    .where(
-      (p) =>
-          p.name.toLowerCase() == crop.name.toLowerCase() &&
-          p.marketId == (crop.marketId ?? s.marketId) &&
-          (crop.variety.isEmpty ||
-              p.variety.toLowerCase() == crop.variety.toLowerCase()),
-    )
-    .toList();
+List<Price> cropPrices(AppState s, FarmCrop crop) =>
+    s.prices
+        .where(
+          (p) =>
+              p.name.toLowerCase() == crop.name.toLowerCase() &&
+              p.marketId == (crop.marketId ?? s.marketId) &&
+              (crop.variety.isEmpty ||
+                  p.isDemo ||
+                  p.variety.toLowerCase() == crop.variety.toLowerCase()),
+        )
+        .toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
 
 class CropsScreen extends StatelessWidget {
   const CropsScreen({super.key, required this.state});
@@ -23,6 +26,7 @@ class CropsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
+      flexibleSpace: const ScenicAppBarBackground(),
       title: Text(state.t('My Crops', 'ನನ್ನ ಬೆಳೆಗಳು')),
       actions: [
         IconButton(
@@ -105,18 +109,7 @@ class CropCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: paleBlue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(
-                      Icons.grass_outlined,
-                      color: accentBlue,
-                      size: 23,
-                    ),
-                  ),
+                  CommodityThumbnail(name: crop.name, size: 48),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -165,7 +158,7 @@ class CropCard extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               const Text(
-                'Forecast not available yet',
+                'Open for the reported range and sell timing',
                 style: TextStyle(fontSize: 12, color: muted),
               ),
             ],
@@ -274,6 +267,7 @@ class _CropFormScreenState extends State<CropFormScreen> {
     }).toList()..sort();
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
         title: Text(
           s.t(widget.crop == null ? 'Add a crop' : 'Edit crop', 'ಬೆಳೆ ಮಾಹಿತಿ'),
         ),
@@ -332,6 +326,7 @@ class _CropFormScreenState extends State<CropFormScreen> {
                       itemBuilder: (context, i) {
                         final option = matches.elementAt(i);
                         return ListTile(
+                          leading: CommodityThumbnail(name: option, size: 40),
                           title: Text(cropLabel(option)),
                           onTap: () => select(option),
                         );
@@ -456,13 +451,17 @@ class CropScreen extends StatelessWidget {
       final c = state.crops.where((c) => c.id == id).firstOrNull;
       if (c == null) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Crop')),
+          appBar: AppBar(
+            flexibleSpace: const ScenicAppBarBackground(),
+            title: const Text('Crop'),
+          ),
           body: const Center(child: Text('This crop has been removed.')),
         );
       }
       final prices = cropPrices(state, c);
       return Scaffold(
         appBar: AppBar(
+          flexibleSpace: const ScenicAppBarBackground(),
           title: Text(cropLabel(c.name)),
           actions: [
             IconButton(
@@ -481,11 +480,7 @@ class CropScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.grass_outlined,
-                      size: 35,
-                      color: accentBlue,
-                    ),
+                    CommodityThumbnail(name: c.name, size: 82),
                     const SizedBox(height: 16),
                     Text(
                       cropLabel(c.name),
@@ -543,13 +538,23 @@ class CropScreen extends StatelessWidget {
                 'At the reported price: ${money(prices.first.modal * c.quantity!)} for ${c.quantity} quintals. This is gross sales value before costs, based on the report dated ${dayLabel(prices.first.date)}.',
               ),
             ],
-            const SectionLabel('Harvest outlook'),
-            const EmptyPanel(
-              icon: Icons.event_note_outlined,
-              title: 'Forecast not available yet',
-              body:
-                  'Price estimates and selling options will appear when forecasts are available for this crop and market.',
-            ),
+            const SectionLabel('Market range and sell timing'),
+            if (prices.isEmpty)
+              const EmptyPanel(
+                icon: Icons.event_note_outlined,
+                title: 'No current report for an outlook',
+                body:
+                    'Load a matching mandi report to see the current price range and an early selling suggestion.',
+              )
+            else
+              FutureBuilder<List<Price>>(
+                future: state.repo.history(prices.first),
+                builder: (context, snapshot) => EarlyPriceOutlook(
+                  state: state,
+                  price: prices.first,
+                  history: snapshot.data ?? const [],
+                ),
+              ),
             if (c.notes.isNotEmpty) ...[
               const SectionLabel('Your notes'),
               Text(c.notes),

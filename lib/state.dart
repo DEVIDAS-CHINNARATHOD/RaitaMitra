@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'data/models.dart';
 import 'data/repository.dart';
+import 'data/demo_price_provider.dart';
 
 class AppState extends ChangeNotifier {
   AppState(this.repo);
@@ -183,7 +184,6 @@ class AppState extends ChangeNotifier {
     }
     ready = true;
     notifyListeners();
-    if (onboarded && marketId.isNotEmpty) unawaited(refresh());
   }
 
   void _readPreferences() {
@@ -280,19 +280,22 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> loadPrices({bool force = false}) async {
+    var reported = <Price>[];
     try {
       final result = await repo.prices(force: force);
-      prices = (result.data as List)
+      reported = (result.data as List)
           .map((j) => Price(Map<String, dynamic>.from(j)))
           .toList();
       offline = result.offline;
       checkedAt = result.savedAt;
-      message = offline ? 'Offline. Showing saved market reports.' : '';
+      message = offline
+          ? 'Offline. Showing saved reports and sample prices.'
+          : '';
     } catch (_) {
       offline = true;
-      message =
-          'Market reports could not be loaded. Your saved directory is available.';
+      message = 'Source prices unavailable. Showing simulated sample prices.';
     }
+    prices = DemoPriceProvider.merge(markets, demoCropNames, reported);
     notifyListeners();
   }
 

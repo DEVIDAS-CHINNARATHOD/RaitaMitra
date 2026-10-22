@@ -78,6 +78,8 @@ flutter:
     - assets/images/farmer_sowing.png
     - assets/images/home_market_farmer.png
     - assets/images/home_sowing_farmer.png
+    - assets/images/header_landscape.png
+    - assets/images/crops/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

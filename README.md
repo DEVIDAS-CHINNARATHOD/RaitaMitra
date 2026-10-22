@@ -70,7 +70,8 @@ Hosted Supabase requests to data.gov.in timed out during verification. Failed re
 
 ## Deferred
 
-- ML forecasts and sell/hold recommendations: tables/display contracts exist, no invented predictions.
+- Trained ML forecasts are not included. Crop and price details show an LLM-generated seven-day price range and conditional sell guidance when at least three dated reports are available; the reported current/low/high values remain source data.
+- When a market/crop has no source report, `lib/data/demo_price_provider.dart` supplies local sample modal/low/high prices and a dated sample history. The UI identifies these as simulated examples, excludes them from LLM and backend forecasts, and never writes them to Supabase. Replace this provider when a verified statewide source is available. Price snapshots and LLM outlooks persist in the local SQLite cache; users can explicitly refresh source market reports.
 - Verified mandi coordinates and automatic nearest-market selection.
 - Complete historical backfill, source pagination and scheduled ingestion.
 - Verified crop maturity tables: harvest dates are currently farmer-entered estimates.
@@ -90,7 +91,7 @@ The security check uses the PostgreSQL environment variables, verifies anonymous
 
 ## Ask Mitra / Groq
 
-`supabase/functions/ask-mitra/index.ts` verifies the user's session, reads their crop records using RLS, loads selected-market reports, and calls Groq. The API key is a backend secret, never a Flutter define. The gateway JWT check is disabled because the function explicitly verifies the token through `auth.getUser()`; unauthenticated requests are rejected. A PostgreSQL quota allows at most 40 calls per user per UTC day. Failed provider calls count towards this budget.
+`supabase/functions/ask-mitra/index.ts` verifies the user's session, reads their crop records using RLS, loads selected-market reports, and calls Groq. It also accepts a `price_outlook` mode that reads up to 14 dated observations for the selected mandi, variety, and grade, then returns a checked seven-day range and conditional selling guidance. Forecast requests require sign-in and count toward the same 40-call daily user quota. The API key is a backend secret, never a Flutter define. The gateway JWT check is disabled because the function explicitly verifies the token through `auth.getUser()`; unauthenticated requests are rejected.
 
 Deployment after CLI login:
 

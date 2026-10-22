@@ -128,9 +128,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   width: selected ? 22 : 7,
                                   height: 7,
                                   decoration: BoxDecoration(
-                                    color: selected
-                                        ? accentBlue
-                                        : const Color(0xffC9DDE5),
+                                    color: selected ? accentBlue : skyBlue,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
@@ -391,6 +389,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final markets = s.markets.where((m) => m.districtId == district).toList();
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: const ScenicAppBarBackground(),
         title: Text(
           s.t(
             widget.editing ? 'Edit profile' : 'Make it local',
