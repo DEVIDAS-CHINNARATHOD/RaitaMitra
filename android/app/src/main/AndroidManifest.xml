@@ -5,7 +5,7 @@
     <application
         android:label="Raitha Mitra"
         android:name="${applicationName}"
-        android:icon="@drawable/raitha_icon">
+        android:icon="@drawable/raitha_mitra_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

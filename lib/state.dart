@@ -146,7 +146,7 @@ class AppState extends ChangeNotifier {
           .map((e) => Market.fromJson(Map<String, dynamic>.from(e)))
           .toList();
       _readPreferences();
-      entered = signedIn || (prefs.getBool('preview_entered') ?? false);
+      entered = signedIn;
       if (signedIn) await _loadProfile();
       _auth = repo.client?.auth.onAuthStateChange.listen((event) async {
         if (event.event == AuthChangeEvent.signedOut) {
@@ -214,12 +214,6 @@ class AppState extends ChangeNotifier {
     } catch (_) {
       /* Keep this account's preferences offline. */
     }
-  }
-
-  Future<void> enterPreview() async {
-    entered = true;
-    await prefs.setBool('preview_entered', true);
-    notifyListeners();
   }
 
   Future<void> setLanguage(String value) async {
@@ -355,9 +349,37 @@ class AppState extends ChangeNotifier {
     );
   }
 
+  Future<AuthResponse> signInWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    final client = repo.client;
+    if (client == null) {
+      throw StateError('The app connection is not configured.');
+    }
+    return client.auth.signInWithPassword(
+      email: email.trim(),
+      password: password,
+    );
+  }
+
+  Future<AuthResponse> registerWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    final client = repo.client;
+    if (client == null) {
+      throw StateError('The app connection is not configured.');
+    }
+    return client.auth.signUp(
+      email: email.trim(),
+      password: password,
+      emailRedirectTo: 'in.raithamitra.app://login-callback',
+    );
+  }
+
   Future<void> signOut() async {
     await repo.client?.auth.signOut(scope: SignOutScope.local);
-    await prefs.setBool('preview_entered', false);
     entered = false;
     onboarded = false;
     name = '';

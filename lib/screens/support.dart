@@ -6,6 +6,7 @@ import '../state.dart';
 import '../ui/theme.dart';
 import '../ui/widgets.dart';
 import 'onboarding.dart';
+import 'email_auth.dart';
 
 const portals = [
   {
@@ -151,9 +152,7 @@ class ProfileTabScreen extends StatelessWidget {
           const SizedBox(height: 6),
           Center(
             child: Text(
-              state.signedIn
-                  ? 'Google account connected'
-                  : 'Saved on this device',
+              state.signedIn ? 'Account connected' : 'Saved on this device',
               style: const TextStyle(color: muted),
             ),
           ),
@@ -320,7 +319,7 @@ class SettingsScreen extends StatelessWidget {
                         ),
                         Text(
                           state.signedIn
-                              ? 'Google account connected'
+                              ? 'Account connected'
                               : 'Exploring on this device',
                           style: const TextStyle(fontSize: 12, color: muted),
                         ),
@@ -389,17 +388,20 @@ class SettingsScreen extends StatelessWidget {
               onPressed: () async {
                 try {
                   await state.signIn();
-                } catch (_) {
+                } catch (error) {
                   if (context.mounted) {
-                    toast(
-                      context,
-                      'Google sign-in is not available right now. Please try again later.',
-                    );
+                    toast(context, 'Could not start Google sign-in: $error');
                   }
                 }
               },
               icon: const Icon(Icons.login),
               label: const Text('Continue with Google'),
+            ),
+          if (!state.signedIn)
+            OutlinedButton.icon(
+              onPressed: () => openPage(context, EmailAuthScreen(state: state)),
+              icon: const Icon(Icons.email_outlined),
+              label: const Text('Sign in or register with email'),
             ),
           const SizedBox(height: 12),
           OutlinedButton(
@@ -606,7 +608,7 @@ class _HelpScreenState extends State<HelpScreen> {
     if (text.isEmpty || sending) return;
     final client = widget.state.repo.client;
     if (client?.auth.currentUser == null) {
-      toast(context, 'Sign in with Google to use Ask Mitra.');
+      toast(context, 'Sign in to use Ask Mitra.');
       return;
     }
     final history = messages
@@ -681,15 +683,21 @@ class _HelpScreenState extends State<HelpScreen> {
                   onPressed: () async {
                     try {
                       await widget.state.signIn();
-                    } catch (_) {
+                    } catch (error) {
                       if (context.mounted) {
                         toast(
                           context,
-                          'Could not start Google sign-in. Please try again.',
+                          'Could not start Google sign-in: $error',
                         );
                       }
                     }
                   },
+                ),
+                TextButton.icon(
+                  onPressed: () =>
+                      openPage(context, EmailAuthScreen(state: widget.state)),
+                  icon: const Icon(Icons.email_outlined),
+                  label: const Text('Sign in with email'),
                 ),
                 const SizedBox(height: 16),
               ],

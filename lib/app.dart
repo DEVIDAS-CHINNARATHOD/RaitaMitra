@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'state.dart';
 import 'ui/theme.dart';
 import 'screens/onboarding.dart';
@@ -6,7 +7,6 @@ import 'screens/home.dart';
 import 'screens/markets.dart';
 import 'screens/crops.dart';
 import 'screens/support.dart';
-import 'ui/karnataka_scene.dart';
 
 class RaithaMitraApp extends StatefulWidget {
   const RaithaMitraApp({super.key, required this.state});
@@ -31,33 +31,54 @@ class _RaithaMitraAppState extends State<RaithaMitraApp> {
       builder: (context, _) {
         if (!state.ready) {
           return Scaffold(
+            backgroundColor: Colors.white,
             body: SafeArea(
               child: Stack(
+                fit: StackFit.expand,
                 children: [
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 28),
-                      child: Column(
+                  Positioned(
+                    top: 0,
+                    left: 12,
+                    right: 12,
+                    height: MediaQuery.sizeOf(context).height * .63,
+                    child: SvgPicture.asset(
+                      'assets/images/raita_mitra_sowing_farmer.svg',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 76,
+                    height: 154,
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(24, 18, 24, 12),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(26),
+                        ),
+                      ),
+                      child: const Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          KarnatakaFarmScene(height: 205),
-                          SizedBox(height: 22),
                           Text(
                             'Raitha Mitra',
                             style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 23,
+                              fontWeight: FontWeight.w700,
+                              color: ink,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 4),
                           Text(
                             'Growing with Karnataka',
                             style: TextStyle(color: muted, fontSize: 14),
                           ),
-                          SizedBox(height: 22),
+                          SizedBox(height: 14),
                           SizedBox(
-                            width: 22,
-                            height: 22,
+                            width: 20,
+                            height: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           ),
                         ],
@@ -67,11 +88,14 @@ class _RaithaMitraAppState extends State<RaithaMitraApp> {
                   Positioned(
                     left: 24,
                     right: 24,
-                    bottom: 22,
+                    bottom: 10,
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(52),
-                        shape: const StadiumBorder(),
+                        minimumSize: const Size.fromHeight(54),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                       ),
                       onPressed: () => navigator.currentState!.push(
                         MaterialPageRoute(

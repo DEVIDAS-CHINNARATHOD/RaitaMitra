@@ -45,6 +45,7 @@ dependencies:
   http: ^1.6.0
   uuid: ^4.6.0
   image_picker: ^1.2.1
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,11 @@ flutter:
   uses-material-design: true
   assets:
     - assets/data/directory.json
+    - assets/images/raita_mitra_sowing_farmer.svg
+    - assets/images/raita_mitra_watering_farmer.svg
+    - assets/images/raitha_mitra_logo.png
+    - assets/images/farmer_watering.png
+    - assets/images/farmer_sowing.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

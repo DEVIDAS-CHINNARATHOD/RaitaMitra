@@ -23,11 +23,11 @@ Enable Google under Supabase Authentication → Sign In / Providers using a Goog
 - Google authorised redirect URI: `https://zzgpdjqmzepjevnnwvmr.supabase.co/auth/v1/callback`
 - Supabase allowed redirect URL: `in.raithamitra.app://login-callback`
 
-The manifest registers the callback. Google consent is completed by the user on the phone. Device-only exploration stores crops locally and does not automatically upload them to an account. Signed-in changes require a successful server save; saved account records remain readable offline.
+The manifest registers the callback. Google consent is completed by the user on the phone. Users can also register and sign in with an email address and password; if email confirmation is enabled in Supabase, the confirmation link returns to the app. Account changes require a successful server save; saved account records remain readable offline.
 
 ## Implemented
 
-Welcome, login, profile and district/mandi selection; Home with dated prices and crop cards; district directory and market details; variety/grade comparison; real price history; crop creation/edit/removal; support portal links; price watchlist; Groq-backed Ask Mitra chat (requires function deployment and sign-in); settings; memory and SQLite caching. The directory is bundled for offline use. The interface uses solid colours and labelled icons. Core navigation/onboarding labels have Kannada translations; some details and errors remain English.
+Welcome, Google and email/password login, profile and district/mandi selection; Home with dated prices and crop cards; district directory and market details; variety/grade comparison; real price history; crop creation/edit/removal; support portal links; price watchlist; Groq-backed Ask Mitra chat (requires function deployment and sign-in); settings; memory and SQLite caching. The directory is bundled for offline use. The interface uses solid colours and labelled icons. Core navigation/onboarding labels have Kannada translations; some details and errors remain English.
 
 ## Database and ingestion
 
