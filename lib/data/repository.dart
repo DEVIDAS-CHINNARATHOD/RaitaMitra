@@ -195,7 +195,7 @@ class Repository {
       throw StateError('Sign in to request an LLM price outlook.');
     }
     final key =
-        'llm_outlook:$language:${price.marketId}:${price.commodityId}:${price.variety}:${price.grade}:${dateOnly(price.date)}:${price.modal}';
+        'llm_outlook_v2:$language:${price.marketId}:${price.commodityId}:${price.variety}:${price.grade}:${dateOnly(price.date)}:${price.modal}';
     final result = await cached(key, const Duration(days: 3650), () async {
       final response = await activeClient.functions.invoke(
         'ask-mitra',

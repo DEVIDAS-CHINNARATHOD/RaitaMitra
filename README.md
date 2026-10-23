@@ -4,13 +4,15 @@ Flutter Android app for Karnataka mandi prices and crop records. Supabase provid
 
 ## Run
 
-Copy `config.example.json` to git-ignored `config.local.json` and fill the Supabase publishable key. Never put a database password or service-role key in Flutter.
+The Supabase project URL and publishable client key are included as app defaults, so a normal run/build is ready to use. To point a build at another Supabase project, copy `config.example.json` to git-ignored `config.local.json`, fill its URL and publishable key, and pass `--dart-define-from-file=config.local.json`.
+
+Only a publishable client key belongs in the mobile app. Never put a database password or service-role/secret key in Flutter; protect data with the existing Row Level Security policies.
 
 ```sh
 flutter pub get
-flutter run --dart-define-from-file=config.local.json
+flutter run
 # Or build an APK for device evaluation:
-flutter build apk --debug --dart-define-from-file=config.local.json
+flutter build apk --debug
 adb install -r build/app/outputs/flutter-apk/app-debug.apk
 ```
 

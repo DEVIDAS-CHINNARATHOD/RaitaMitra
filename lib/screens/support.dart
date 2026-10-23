@@ -7,6 +7,7 @@ import '../ui/theme.dart';
 import '../ui/widgets.dart';
 import 'onboarding.dart';
 import 'email_auth.dart';
+import 'credits.dart';
 
 const portals = [
   {
@@ -274,15 +275,7 @@ class ProfileTabScreen extends StatelessWidget {
                   icon: Icons.school_outlined,
                   title: state.t('Credits', 'ಕೃತಜ್ಞತೆಗಳು'),
                   subtitle: state.t('Student project', 'ವಿದ್ಯಾರ್ಥಿ ಯೋಜನೆ'),
-                  onTap: () => openPage(
-                    context,
-                    const _ProfileInfoScreen(
-                      title: 'Student Credits',
-                      icon: Icons.school_outlined,
-                      body:
-                          'Raitha Mitra is an independent student project created to make Karnataka market information and crop planning tools easier to access.',
-                    ),
-                  ),
+                  onTap: () => openPage(context, const StudentCreditsScreen()),
                 ),
               ],
             ),

@@ -15,25 +15,93 @@ class MarketsScreen extends StatefulWidget {
 }
 
 class _MarketsScreenState extends State<MarketsScreen> {
-  String search = '', district = '';
+  static const _districtImages = <String, String>{
+    'bagalkote': 'assets/images/districts/bagalkote.png',
+    'ballari': 'assets/images/districts/ballari.png',
+    'belagavi': 'assets/images/districts/belagavi.png',
+    'bengaluru-rural': 'assets/images/districts/bengaluru-rural.png',
+    'bengaluru-south': 'assets/images/districts/bengaluru-south.png',
+    'bengaluru-urban': 'assets/images/districts/bengaluru-urban.png',
+    'bidar': 'assets/images/districts/bidar.png',
+    'chamarajanagar': 'assets/images/districts/chamarajanagar.png',
+    'chikkaballapura': 'assets/images/districts/chikkaballapura.png',
+    'chikkamagaluru': 'assets/images/districts/chikkamagaluru.png',
+    'chitradurga': 'assets/images/districts/chitradurga.png',
+    'dakshina-kannada': 'assets/images/districts/dakshina-kannada.png',
+    'davanagere': 'assets/images/districts/davanagere.png',
+    'dharwad': 'assets/images/districts/dharwad.png',
+    'gadag': 'assets/images/districts/gadag.png',
+    'hassan': 'assets/images/districts/hassan.png',
+    'haveri': 'assets/images/districts/haveri.png',
+    'kalaburagi': 'assets/images/districts/kalaburagi.png',
+    'kodagu': 'assets/images/districts/kodagu.png',
+    'kolar': 'assets/images/districts/kolar.png',
+    'koppal': 'assets/images/districts/koppal.png',
+    'mandya': 'assets/images/districts/mandya.png',
+    'mysuru': 'assets/images/districts/mysuru.png',
+    'raichur': 'assets/images/districts/raichur.png',
+    'shivamogga': 'assets/images/districts/shivamogga.png',
+    'tumakuru': 'assets/images/districts/tumakuru.png',
+    'udupi': 'assets/images/districts/udupi.png',
+    'uttara-kannada': 'assets/images/districts/uttara-kannada.png',
+    'vijayanagara': 'assets/images/districts/vijayanagara.png',
+    'vijayapura': 'assets/images/districts/vijayapura.png',
+    'yadgir': 'assets/images/districts/yadgir.png',
+  };
+
+  String search = '';
+  String? selectedDistrict;
+
+  void _openDistrict(String id) {
+    setState(() {
+      selectedDistrict = id;
+      search = '';
+    });
+  }
+
+  void _showDistricts() {
+    setState(() {
+      selectedDistrict = null;
+      search = '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = widget.state;
-    final list = s.markets
+    final activeDistrict = selectedDistrict;
+    final district = activeDistrict == null
+        ? null
+        : s.districts.where((d) => d['id'] == activeDistrict).firstOrNull;
+    final markets = activeDistrict == null
+        ? <Market>[]
+        : s.markets
+              .where(
+                (m) =>
+                    m.districtId == activeDistrict &&
+                    m.name.toLowerCase().contains(search.toLowerCase()),
+              )
+              .toList();
+    final districts = s.districts
         .where(
-          (m) =>
-              (district.isEmpty || m.districtId == district) &&
-              (m.name.toLowerCase().contains(search.toLowerCase()) ||
-                  s
-                      .districtName(m.districtId)
-                      .toLowerCase()
-                      .contains(search.toLowerCase())),
+          (d) => (d['name'] as String).toLowerCase().contains(
+            search.toLowerCase(),
+          ),
         )
         .toList();
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: const ScenicAppBarBackground(),
-        title: Text(s.t('Markets', 'ಮಾರುಕಟ್ಟೆಗಳು')),
+        leading: activeDistrict == null
+            ? null
+            : IconButton(
+                tooltip: 'All districts',
+                onPressed: _showDistricts,
+                icon: const Icon(Icons.arrow_back),
+              ),
+        title: Text(
+          district == null ? s.t('Markets', 'ಮಾರುಕಟ್ಟೆಗಳು') : district['name'],
+        ),
         actions: [
           IconButton(
             tooltip: 'Compare prices',
@@ -46,12 +114,22 @@ class _MarketsScreenState extends State<MarketsScreen> {
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 110),
         children: [
           Text(
-            s.t('Across Karnataka.', 'ಕರ್ನಾಟಕದಾದ್ಯಂತ.'),
+            district == null
+                ? s.t(
+                    'Find a mandi by district.',
+                    'ಜಿಲ್ಲೆಯ ಮೂಲಕ ಮಾರುಕಟ್ಟೆ ಹುಡುಕಿ.',
+                  )
+                : s.t(
+                    'Mandis in ${district['name']}.',
+                    '${district['name']} ಜಿಲ್ಲೆಯ ಮಾರುಕಟ್ಟೆಗಳು.',
+                  ),
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 10),
           Text(
-            '${s.districts.length} districts · ${s.markets.length} listed mandis',
+            district == null
+                ? '${s.districts.length} districts across Karnataka'
+                : '${s.markets.where((m) => m.districtId == activeDistrict).length} listed mandis in this district',
             style: const TextStyle(color: muted),
           ),
           const SizedBox(height: 22),
@@ -59,85 +137,198 @@ class _MarketsScreenState extends State<MarketsScreen> {
             onChanged: (v) => setState(() => search = v),
             decoration: InputDecoration(
               hintText: s.t(
-                'Search mandi or district',
-                'ಮಾರುಕಟ್ಟೆ ಅಥವಾ ಜಿಲ್ಲೆ ಹುಡುಕಿ',
+                district == null ? 'Search district' : 'Search mandi',
+                district == null ? 'ಜಿಲ್ಲೆ ಹುಡುಕಿ' : 'ಮಾರುಕಟ್ಟೆ ಹುಡುಕಿ',
               ),
               prefixIcon: const Icon(Icons.search),
             ),
           ),
-          const SizedBox(height: 12),
-          DropdownButtonFormField<String>(
-            initialValue: district,
-            isExpanded: true,
-            decoration: const InputDecoration(labelText: 'District'),
-            items: [
-              const DropdownMenuItem(value: '', child: Text('All Karnataka')),
-              ...s.districts.map(
-                (d) => DropdownMenuItem<String>(
-                  value: d['id'],
-                  child: Text(
-                    '${d['name']} (${s.markets.where((m) => m.districtId == d['id']).length})',
-                  ),
-                ),
-              ),
-            ],
-            onChanged: (v) => setState(() => district = v ?? ''),
-          ),
           const SizedBox(height: 20),
-          if (list.isEmpty)
+          if (district == null && districts.isEmpty)
             const EmptyPanel(
               icon: Icons.search_off,
-              title: 'No markets found',
-              body: 'Try another district or spelling.',
-            ),
-          ...list.map((m) {
-            final count = s.prices.where((p) => p.marketId == m.id).length;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Card(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  leading: const CircleAvatar(
-                    backgroundColor: paleBlue,
-                    child: Icon(
-                      Icons.storefront_outlined,
-                      color: accentBlue,
-                      size: 21,
+              title: 'No districts found',
+              body: 'Try a different spelling.',
+            )
+          else if (district == null)
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final columns = constraints.maxWidth >= 620 ? 3 : 2;
+                final spacing = 10.0;
+                final width =
+                    (constraints.maxWidth - spacing * (columns - 1)) / columns;
+                return Wrap(
+                  spacing: spacing,
+                  runSpacing: spacing,
+                  children: districts.map((d) {
+                    final id = d['id'] as String;
+                    final count = s.markets
+                        .where((m) => m.districtId == id)
+                        .length;
+                    return SizedBox(
+                      width: width,
+                      child: _DistrictCard(
+                        name: d['name'] as String,
+                        mandiCount: count,
+                        imageAsset:
+                            _districtImages[id] ??
+                            'assets/images/header_landscape.png',
+                        onTap: () => _openDistrict(id),
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            )
+          else if (markets.isEmpty)
+            EmptyPanel(
+              icon: Icons.storefront_outlined,
+              title: search.isEmpty ? 'No mandis listed' : 'No mandis found',
+              body: search.isEmpty
+                  ? 'There are no directory entries for this district yet.'
+                  : 'Try a different mandi name.',
+            )
+          else
+            ...markets.map((m) {
+              final count = s.prices.where((p) => p.marketId == m.id).length;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Card(
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
                     ),
-                  ),
-                  title: Text(
-                    m.name,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: Text(
-                    '${s.districtName(m.districtId)}\n${count > 0 ? '$count available price reports' : 'No price reports loaded'}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: muted,
-                      height: 1.6,
+                    leading: const CircleAvatar(
+                      backgroundColor: paleBlue,
+                      child: Icon(
+                        Icons.storefront_outlined,
+                        color: accentBlue,
+                        size: 21,
+                      ),
                     ),
+                    title: Text(
+                      m.name,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(
+                      count > 0
+                          ? '$count available price reports'
+                          : 'No price reports loaded',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: muted,
+                        height: 1.6,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.chevron_right, size: 20),
+                    onTap: () =>
+                        openPage(context, MarketScreen(state: s, market: m)),
                   ),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                  onTap: () =>
-                      openPage(context, MarketScreen(state: s, market: m)),
                 ),
+              );
+            }),
+          if (district != null)
+            const Padding(
+              padding: EdgeInsets.only(top: 12),
+              child: Text(
+                'Directory entries are supplied by the project team. Market and sub-yard status is awaiting verification.',
+                style: TextStyle(fontSize: 12, color: muted),
               ),
-            );
-          }),
-          const Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: Text(
-              'Directory entries are supplied by the project team. Market and sub-yard status is awaiting verification.',
-              style: TextStyle(fontSize: 12, color: muted),
             ),
-          ),
         ],
       ),
     );
   }
+}
+
+class _DistrictCard extends StatelessWidget {
+  const _DistrictCard({
+    required this.name,
+    required this.mandiCount,
+    required this.imageAsset,
+    required this.onTap,
+  });
+
+  final String name;
+  final int mandiCount;
+  final String imageAsset;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Material(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(18),
+    clipBehavior: Clip.antiAlias,
+    child: InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        height: 142,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(imageAsset, fit: BoxFit.cover),
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x000B2635), Color(0xD90B2635)],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 14,
+              right: 12,
+              bottom: 13,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          name,
+                          maxLines: 2,
+                          overflow: TextOverflow.visible,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            height: 1.1,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '$mandiCount ${mandiCount == 1 ? 'mandi' : 'mandis'}',
+                          style: const TextStyle(
+                            color: Color(0xFFDCEBF0),
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const CircleAvatar(
+                    radius: 16,
+                    backgroundColor: Color(0x663A5159),
+                    child: Icon(
+                      Icons.chevron_right,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 class MarketScreen extends StatelessWidget {
